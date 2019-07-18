@@ -1,0 +1,44 @@
+D:\Projects\Visual Studio\source\NLP\NLP\bin\Debug\NLP.dll
+D:\Projects\Visual Studio\source\NLP\NLP\bin\Debug\NLP.pdb
+D:\Projects\Visual Studio\source\NLP\NLP\bin\Debug\NLP.pri
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\NLP.csproj.CoreCompileInputs.cache
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\NLP.dll
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\NLP.pdb
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\priconfig.xml
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\priconfig.xml.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\unfiltered.layout.resfiles
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\unfiltered.layout.resfiles.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\filtered.layout.resfiles
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\filtered.layout.resfiles.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\excluded.layout.resfiles
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\excluded.layout.resfiles.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\resources.resfiles
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\resources.resfiles.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\pri.resfiles
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\pri.resfiles.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\qualifiers.txt
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\qualifiers.txt.intermediate
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\MultipleQualifiersPerDimensionFound.txt
+D:\Projects\Visual Studio\source\NLP\NLP\obj\Debug\NLP.csprojAssemblyReference.cache
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\bin\Debug\NLP.dll
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\bin\Debug\NLP.pdb
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\bin\Debug\NLP.pri
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\NLP.csprojAssemblyReference.cache
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\NLP.csproj.CoreCompileInputs.cache
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\NLP.dll
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\NLP.pdb
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\priconfig.xml
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\priconfig.xml.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\unfiltered.layout.resfiles
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\unfiltered.layout.resfiles.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\filtered.layout.resfiles
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\filtered.layout.resfiles.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\excluded.layout.resfiles
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\excluded.layout.resfiles.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\resources.resfiles
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\resources.resfiles.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\pri.resfiles
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\pri.resfiles.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\qualifiers.txt
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\qualifiers.txt.intermediate
+D:\Projects\Github\nlp-programming-language-detection\NLP\NLP\obj\Debug\MultipleQualifiersPerDimensionFound.txt

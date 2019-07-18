@@ -1,0 +1,30 @@
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.deps.json
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.runtimeconfig.json
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.runtimeconfig.dev.json
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.dll
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.pdb
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csprojAssemblyReference.cache
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csproj.CoreCompileInputs.cache
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.AssemblyInfoInputs.cache
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.AssemblyInfo.cs
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.dll
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.pdb
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.dll
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.pdb
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.pri
+D:\Projects\Visual Studio\source\nlp_prglang\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csproj.CopyComplete
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csprojAssemblyReference.cache
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csproj.CoreCompileInputs.cache
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.AssemblyInfoInputs.cache
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.AssemblyInfo.cs
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.dll
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.pdb
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.deps.json
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.runtimeconfig.json
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.runtimeconfig.dev.json
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.dll
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\nlp_prglang.pdb
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.dll
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.pdb
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\bin\Debug\netcoreapp2.1\NLP.pri
+D:\Projects\Github\nlp-programming-language-detection\nlp_prglang\obj\Debug\netcoreapp2.1\nlp_prglang.csproj.CopyComplete
