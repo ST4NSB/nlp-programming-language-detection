@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 
 using NaturalLanguageProcessing.Tokenize;
-using NaturalLanguageProcessing.Frequency;
 using NaturalLanguageProcessing.Stopwords;
+using NaturalLanguageProcessing.Frequency;
 using NaturalLanguageProcessing.Model;
 
 
@@ -37,18 +37,19 @@ namespace nlp_prglang
         {
             string text = "";
             if (File.Exists(pathFile))
-            { 
+            {
                 text = File.ReadAllText(pathFile);
                 if (output)
                 {
-                    Console.WriteLine("+-------------------- BEGIN FILE -----------------------+");
+                    Console.WriteLine("+-------------------- FILE READ BEGIN -----------------------+");
                     Console.WriteLine(text);
-                    Console.WriteLine("+--------------------- END FILE -----------------------+");
-                    Console.WriteLine();
+                    Console.WriteLine("+--------------------- FILE READ END -----------------------+\n");
                 }
             }
             else
+            {
                 throw new Exception("The file " + fileName + " doesn't exist in " + pathFile + "!");
+            }
             return text;
         }
     }
@@ -63,8 +64,9 @@ namespace nlp_prglang
             // load training files from directory
             string learn = new FileReader(file).getAllTxt();
 
-            // tokenize words (words only method here)
-            List<string> dataTokenized = new Token().wordsOnlyTokenizer(learn);
+            // tokenize words 
+            List<string> dataTokenized = new Token().treebankWordTokenizer(learn);
+            //List<string> dataTokenized = new Token().whiteSpaceTokenizer(learn);
 
             // removing numbers & removing single letter character & based on stoplist
             StopWords sw = new StopWords();
@@ -78,12 +80,12 @@ namespace nlp_prglang
             return data;
         }
 
-        /*static void debugFunc(ModelTrainer mt, Predictor predictor)
+        static void debugFunc(ModelTrainer mt, Predictor predictor)
         {
             Console.WriteLine("-------- Model Data List ------- ..");
             foreach (var item in mt.getDataModelTrained())
                 Console.WriteLine("Label-ID: " + item.getDataModelLabelID() + "|| Word-Frequency: " + item.getDataModelTagInfo() +
-                   "|| Word: " + item.getDataModelString() + "|| Trust Probability: " + item.getTrustProcent());
+                   "|| Word: " + item.getDataModelString() + "|| Confidence Rate Probability: " + item.getConfidenceProcentRate());
             Console.WriteLine("-------------------------------- .. ");
 
             Console.WriteLine("----- Threshold of removing the frequency of words ------ ..");
@@ -94,8 +96,7 @@ namespace nlp_prglang
             foreach (var item in mt.countValues())
                 Console.WriteLine(item.Key + " => " + item.Value);
             Console.WriteLine("--------------------- .. ");
-
-            Console.WriteLine("------ Prediction values (0.f) -------- ..");
+            /*Console.WriteLine("------ Prediction values (0.f) -------- ..");
             foreach (var item in predictor.predictorValues)
             {
                 Console.WriteLine(item.Key + " -> " + item.Value);
@@ -107,8 +108,8 @@ namespace nlp_prglang
             {
                 Console.WriteLine(item.Key + " -> " + item.Value);
             }
-            Console.WriteLine("-------------------- .. ");
-        }*/
+            Console.WriteLine("-------------------- .. ");*/
+        } 
 
         static void Main(string[] args)
         {
@@ -126,31 +127,32 @@ namespace nlp_prglang
                 mt.loadData(LANG_JAVA, item.Value, item.Key);
 
             mt.computeRemovingThresholdValue();
-            // mt.setRemovingThresholdValue(0);
+            //mt.setRemovingThresholdValue(0);
             mt.trainData();
 
             // load 
-            string pred = new FileReader("files/predict.txt").getAllTxt(true);
+            string predictionFile = "files/cpp.txt";
+            string pred = new FileReader(predictionFile).getAllTxt(true);
             List<string> predProcessed = new Token().wordsOnlyTokenizer(pred);
             predProcessed = new StopWords().removeWordsBasedOnStopWordsList(predProcessed);
       
             // calculate the values and create probabilities based on labels
             Predictor predictor = new Predictor();
             var mymodel = mt.getDataModelTrained();
-            predictor.simplisticPrediction(mymodel, predProcessed, LANG_CPP);
+            predictor.makePrediction(mymodel, predProcessed, LANG_CPP);
             var max = predictor.argmax();
 
-            //debugFunc(mt, predictor);
-
-            string msg = "The model predicts: ";
+            // output message for prediction
+            string msg = "\nThe model predicts: ";
             switch(max.Key)
             {
                 case LANG_CPP: msg += "C++"; break;
                 case LANG_JAVA: msg += "Java"; break;
+                // add here more languages
             }
-            msg += " as the language of the file, with " + max.Value + " trust procent! (" + (0.999999f - max.Value) + " for Java)";
+            msg += " as the language of the file(" + predictionFile + ").\nConfidence rate: " + max.Value + " (" 
+                + (0.999999f - max.Value) + " for the other(s)!)\n";
             Console.WriteLine(msg);
-
         }
     }
 }

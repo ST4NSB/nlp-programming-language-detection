@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang\\nlp_prglang.csproj": {}
+    "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang\\nlp_prglang.csproj": {
+    "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang\\nlp_prglang.csproj",
+        "projectUniqueName": "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang.csproj",
         "projectName": "nlp_prglang",
-        "projectPath": "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang\\nlp_prglang.csproj",
+        "projectPath": "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang.csproj",
         "packagesPath": "C:\\Users\\adiba\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Github\\nlp-programming-language-detection\\nlp_prglang\\obj\\",
+        "outputPath": "D:\\Projects\\Github\\nlp-programming-language-detection\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Microsoft\\Xamarin\\NuGet\\",

@@ -1,1090 +1,1522 @@
-import javax.swing.*;  
-public class Simple {  
-JFrame f;  
-Simple(){  
-f=new JFrame();//creating instance of JFrame  
-          
-JButton b=new JButton("click");//creating instance of JButton  
-b.setBounds(130,100,100, 40);  
-          
-f.add(b);//adding button in JFrame  
-          
-f.setSize(400,500);//400 width and 500 height  
-f.setLayout(null);//using no layout managers  
-f.setVisible(true);//making the frame visible  
-}  
-  
-public static void main(String[] args) {  
-new Simple();  
-}  
-}  
-public class Reverse {
-    public static void main(String[] args) {
-        String sentence = "Go work";
-        String reversed = reverse(sentence);
-        System.out.println("The reversed sentence is: " + reversed);
-    }
-    public static String reverse(String sentence)
-    {
-        if (sentence.isEmpty())
-            return sentence;
-        return reverse(sentence.substring(1)) + sentence.charAt(0);
-    }
+// training source: https://www.w3schools.com/java, https://www.geeksforgeeks.org, https://beginnersbook.com
+
+public class MyClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
 }
 
-public class Array {
-    public static void main(String[] args) {
-        int[] array = {1, 2, 3, 4, 5};
-        for (int element: array) {
-            System.out.println(element);
-        }
-    }
-}
-import java.awt.Rectangle;
-
-public class ObjectVarsAsParameters
-{	public static void main(String[] args)
-	{	go();
-	}
-	
-	public static void go()
-	{	Rectangle r1 = new Rectangle(0,0,5,5);
-		System.out.println("In method go. r1 " + r1 + "\n");
-		// could have been 
-		//System.out.prinltn("r1" + r1.toString());
-		r1.setSize(10, 15);
-		System.out.println("In method go. r1 " + r1 + "\n");
-		alterPointee(r1);
-		System.out.println("In method go. r1 " + r1 + "\n");
-		
-		alterPointer(r1);
-		System.out.println("In method go. r1 " + r1 + "\n");
-	}
-	
-	public static void alterPointee(Rectangle r)
-	{	System.out.println("In method alterPointee. r " + r + "\n");
-		r.setSize(20, 30);
-		System.out.println("In method alterPointee. r " + r + "\n");
-	}
-	
-	public static void alterPointer(Rectangle r)
-	{	System.out.println("In method alterPointer. r " + r + "\n");
-		r = new Rectangle(5, 10, 30, 35);
-		System.out.println("In method alterPointer. r " + r + "\n");
-	}
-	
-	
-}
-import java.util.Arrays;
-import java.awt.Rectangle;
-
-/**
- * A sample of a ploymorphic method.
- * @author scottm
- *
- */
-public class CreateASet {
-    
-    public static void main(String[] args){
-        String[] words = {"A", "B", "B", "D", "C", "A"};
-        System.out.println( "original: " + Arrays.toString(words));
-        System.out.println( "as a set: " + Arrays.toString(makeSet(words)));
-        
-        Rectangle[] rectList = {new Rectangle(), new Rectangle(), 
-                    new Rectangle(0, 1, 2, 3), new Rectangle(0, 1, 2, 3)};
-        System.out.println( "original: " + Arrays.toString(rectList));
-        System.out.println( "as a set: " + Arrays.toString(makeSet(rectList)));     
-        
-        
-        Object[] mixed = {"A", "C", "A", "B", new Rectangle(),
-                new Rectangle(), "A", new Rectangle(0, 1, 2, 3), "D"};
-        System.out.println( "original: " + Arrays.toString(mixed));
-        System.out.println( "as a set: " + Arrays.toString(makeSet(mixed))); 
-    }
-    
-    /**
-     * An example of polymorphism in action. The method relies
-     * on Java's inheritance requirement and polymorhphism to call
-     * the correct equals method.
-     * @param data != null, no elements of data are null
-     * @return a Set (no duplicates) of the elements in data.
-     */
-    public static Object[] makeSet(Object[] data){
-        assert data != null : "Failed precondition makeSet. parameter cannot be null";
-        assert noNulls(data) : "Failed precondition makeSet. no elements of parameter can be null";
-        Object[] result = new Object[data.length];
-        int numUnique = 0;
-        boolean found;
-        int indexInResult;
-        for(int i = 0; i < data.length; i++){
-            // maybe should break this out into another method
-            indexInResult = 0;
-            found = false;
-            while(!found && indexInResult < numUnique){
-                found = data[i].equals(result[indexInResult]);
-                indexInResult++;
-            }
-            if( ! found ){
-                result[numUnique] = data[i];
-                numUnique++;
-            }
-        }
-        Object[] result2 = new Object[numUnique];
-        System.arraycopy(result, 0, result2, 0, numUnique);
-        return result2;
-    }
-    
-    // pre: data != null
-    // return true if all elements of data are non null,
-    // false otherwise
-    private static boolean noNulls(Object[] data){
-        assert data != null : "Failed precondition makeSet. parameter cannot be null";
-        boolean good = true;
-        int i = 0;
-        while( good && i < data.length ){
-            good = data[i] != null;
-            i++;
-        }
-        return good;        
-    }
-    
-}
-import java.util.Collection;
-import java.util.Iterator;
-
-/**
- * A class to provide a simple list.
- * List resizes automatically. Used to illustrate 
- * various design and implementation details of 
- * a class in Java.
- * 
- * @author scottm
- *
- */
-public class GenericListVersion2 implements Iterable{
-    // class constant for default size
-    private static final int DEFAULT_CAP = 10;
-    
-    //instance variables
-    // iValues store the elements of the list and 
-    // may have extra capacity
-    private Object[] iValues;
-    private int iSize;
-    
-    private class GenericListIterator implements Iterator{
-        private int position;
-        private boolean removeOK;
-        
-        private GenericListIterator(){
-            position = 0;
-            removeOK = false;
-        }
-        
-        public boolean hasNext(){
-            return position < iSize;
-        }
-        
-        public Object next(){
-            Object result = iValues[position];
-            position++;
-            removeOK = true;
-            return result;
-        }
-        
-        public void remove(){
-            if( !removeOK )
-                throw new IllegalStateException();
-            // which element should be removed??
-            removeOK = false;
-            GenericListVersion2.this.remove(position - 1);
-            position--;
-        }
-    }
-    
-    public Iterator iterator(){
-        return new GenericListIterator();
-    }
-    
-    public void addAll(Collection c){
-       // for each loop
-        for(Object obj : c){
-            this.add(obj);
-        }
-    }
-    
-    /**
-     * Default add method. Add x to the end of this IntList.
-     * Size of the list goes up by 1.
-     * @param x The value to add to the end of this list.
-     */
-    public void add(Object x){
-        insert(iSize, x);
-    }
-    
-    public Object get(int pos){
-        return iValues[pos];
-    }
-    
-    /**
-     * Insert obj at position pos.
-     * post: get(pos) = x, size() = old size() + 1
-     * @param pos 0 <= pos <= size()
-     * @param obj The element to add.
-     */
-    public void insert(int pos, Object obj){
-        ensureCapcity();
-        for(int i = iSize; i > pos; i--){
-            iValues[i] = iValues[i - 1];
-        }
-        iValues[pos] = obj;
-        iSize++;
-    }
-    
-    public Object remove(int pos){
-        Object removedValue = iValues[pos];
-        for(int i = pos; i < iSize - 1; i++)
-            iValues[i] = iValues[i + 1];
-        iValues[iSize - 1] = null;
-        iSize--;
-        return removedValue;
-    }
-    
-    private void ensureCapcity(){
-        // is there extra capacity available?
-        // if not, resize
-        if(iSize == iValues.length)
-            resize();
-    }
-    
-    public int size(){
-        return iSize;
-    }
-    
-    // resize internal storage container by a factor of 2
-    private void resize() {
-        Object[] temp = new Object[iValues.length * 2];
-        System.arraycopy(iValues, 0, temp, 0, iValues.length);
-        iValues = temp;
-    }
-    
-    /**
-     * Return a String version of this list. Size and 
-     * elements included.
-     */
-    public String toString(){
-        // we could make this more effecient by using a StringBuffer.
-        // See alternative version
-        String result = "size: " + iSize + ", elements: [";
-        for(int i = 0; i < iSize - 1; i++)
-            result += iValues[i].toString() + ", ";
-        if(iSize > 0 )
-            result += iValues[iSize - 1];
-        result += "]";
-        return result;
-    }
-    
-    // Would not really have this and toString available
-    // both included just for testing
-    public String toStringUsingStringBuffer(){
-        StringBuffer result = new StringBuffer();
-        result.append( "size: " );
-        result.append( iSize );
-        result.append(", elements: [");
-        for(int i = 0; i < iSize - 1; i++){
-            result.append(iValues[i]);
-            result.append(", ");
-        }
-        if( iSize > 0 )
-            result.append(iValues[iSize - 1]);
-        result.append("]");
-        return result.toString();
-    }
-
-    /**
-     * Default constructor. Creates an empty list.
-     */
-    public GenericListVersion2(){
-        //redirect to single int constructor
-        this(DEFAULT_CAP);
-        //other statments could go here.
-    }
-
-    /**
-     * Constructor to allow user of class to specify 
-     * initial capacity in case they intend to add a lot
-     * of elements to new list. Creates an empty list.
-     * @param initialCap > 0
-     */    
-    public GenericListVersion2(int initialCap) {
-        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
-            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
-        iValues = new Object[initialCap];
-        iSize = 0;
-    }
-    
-   /**
-    * Return true if this IntList is equal to other.<br>
-    * pre: none
-    * @param other The object to comapre to this
-    * @return true if other is a non null, IntList object
-    * that is the same size as this IntList and has the
-    * same elements in the same order, false otherwise.
-    */
-    public boolean equals(Object other){
-        boolean result;
-        if(other == null)
-            // we know this is not null so can't be equal
-            result = false;
-        else if(this == other)
-            // quick check if this and other refer to same IntList object
-            result = true;
-        else if( this.getClass() != other.getClass() )
-            // other is not an IntList they can't be equal
-            result = false;
-        else{
-            // other is not null and refers to an IntList
-            GenericListVersion2 otherList = (GenericListVersion2)other;
-            result = this.size() == otherList.size();
-            int i = 0;
-            while(i < iSize && result){
-                result = this.iValues[i].equals( otherList.iValues[i] );
-                i++;
-            }
-        }
-        return result;     
-    }
-
-}
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
-
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-
-
-public class WordCount {
-
-    public static void main(String[] args) {
-        countWordsViaGUI();
-    }
-
-
-    // allow user to pick file to exam via GUI.
-    // allow multiple picks
-    public static void countWordsViaGUI() {
-        setLookAndFeel();
-        try {
-            Scanner key = new Scanner(System.in);
-            do {
-                System.out.println("Opening GUI to choose file.");
-                Scanner fileScanner = new Scanner(getFile());
-                Stopwatch st = new Stopwatch();
-                st.start();
-                ArrayList<String> words = countWordsWithArrayList(fileScanner);
-                st.stop();
-                System.out.println("time to count: " + st);
-                System.out.print("Enter number of words to display: ");
-                int numWordsToShow = Integer.parseInt(key.nextLine());
-                showWords(words, numWordsToShow);
-                fileScanner.close();
-                System.out.print("Perform another count? ");
-            } while(key.nextLine().toLowerCase().charAt(0) == 'y');
-            key.close();
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("Problem reading the data file. Exiting the program." + e);
-        }
-    }
-
-
-    // determine distinct words in a file using an array list
-    private static ArrayList<String> countWordsWithArrayList(Scanner fileScanner) {
-
-
-        System.out.println("Total number of words: " + numWords);
-        System.out.println("number of distincy words: " + result.size());
-        return result;
-    }
-
-
-    // determine distinct words in a file and frequency of each word with a Map
-    private static Map<String, Integer> countWordsWithMap(Scanner fileScanner) {
-
-
-        System.out.println("Total number of words: " + numWords);
-        System.out.println("number of distincy words: " + result.size());
-        return result;
-    }
-
-
-    private static void showWords(ArrayList<String> words, int numWordsToShow) {
-        for(int i = 0; i < words.size() && i < numWordsToShow; i++)
-            System.out.println(words.get(i));
-    }
-
-
-    private static void showWords(Map<String, Integer> words, int numWordsToShow) {
-
-
-
-    }
-
-
-    // perform a series of experiments on files. Determine average time to
-    // count words in files of various sizes
-    private static void performExp() {
-        String[] smallerWorks = {"smallWords.txt", "2BR02B.txt", "Alice.txt", "SherlockHolmes.txt"};;
-        String[] bigFile = {"ciaFactBook2008.txt"};
-        timingExpWithArrayList(smallerWorks, 50);
-        timingExpWithArrayList(bigFile, 3);
-        timingExpWithMap(smallerWorks, 50);
-        timingExpWithMap(bigFile, 3);
-    }
-
-
-    // pre: titles != null, elements of titles refer to files in the
-    // same path as this program, numExp >= 0
-    // read words from files and print average time to cound words.
-    private static void timingExpWithMap(String[] titles, int numExp) {
-        try {
-            double[] times = new double[titles.length];
-            final int NUM_EXP = 50;
-            for(int i = 0; i < NUM_EXP; i++) {
-                for(int j = 0; j < titles.length; j++) {
-                    Scanner fileScanner = new Scanner(new File(titles[j]));
-                    Stopwatch st = new Stopwatch();
-                    st.start();
-                    Map<String, Integer> words = countWordsWithMap(fileScanner);
-                    st.stop();
-                    System.out.println(words.size());
-                    times[j] += st.time();
-                    fileScanner.close();
-                }
-            }
-            for(double a : times)
-                System.out.println(a / NUM_EXP);
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("Problem reading the data file. Exiting the program." + e);
-        }
-    }
-
-
-    // pre: titles != null, elements of titles refer to files in the
-    // same path as this program, numExp >= 0
-    // read words from files and print average time to cound words.
-    private static void timingExpWithArrayList(String[] titles, int numExp) {
-        try {
-            double[] times = new double[titles.length];
-            for(int i = 0; i < numExp; i++) {
-                for(int j = 0; j < titles.length; j++) {
-                    Scanner fileScanner = new Scanner(new File(titles[j]));
-                    Stopwatch st = new Stopwatch();
-                    st.start();
-                    ArrayList<String> words = countWordsWithArrayList(fileScanner);
-                    st.stop();
-                    times[j] += st.time();
-                    fileScanner.close();
-                }
-            }
-            for(int i = 0; i < titles.length; i++)
-                System.out.println("Average time for " + titles[i] + ": " + (times[i] / numExp));
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("Problem reading the data file. Exiting the program." + e);
-        }
-    }
-
-
-    // try to set look and feel to same as system
-    private static void setLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch(Exception e) {
-            System.out.println("Unable to set look at feel to local settings. " +
-            "Continuing with default Java look and feel.");
-        }
-    }
-
-
-    /** Method to choose a file using a window.
-     * @return the file chosen by the user. Returns null if no file picked.
-     */
-    private static File getFile() {
-        // create a GUI window to pick the text to evaluate
-        JFileChooser chooser = new JFileChooser(".");
-        chooser.setDialogTitle("Select File To Count Words:");
-        int retval = chooser.showOpenDialog(null);
-        File f =null;
-        chooser.grabFocus();
-        if (retval == JFileChooser.APPROVE_OPTION)
-            f = chooser.getSelectedFile();
-        return f;
-    }
-}
-import java.util.Iterator;
-
-/**
- * Interface for a simple List. Random access to all items in the list is provided. 
- * The numbering of elements in the list begins at 0.
- *
- */
-public interface IList<E> extends Iterable<E>{
-
-	/**
-	 * Add an item to the end of this list.
-	 * <br>pre: none
-	 * <br>post: size() = old size() + 1, get(size() - 1) = item
-	 * @param item the data to be added to the end of this list
-	 */
-	void add(E item);
-
-	/**
-	 * Insert an item at a specified position in the list.
-	 * <br>pre: 0 <= pos <= size()
-	 * <br>post: size() = old size() + 1, get(pos) = item, all elements in
-	 * the list with a positon >= pos have a position = old position + 1
-	 * @param pos the position to insert the data at in the list
-	 * @param item the data to add to the list
-	*/
-	void insert(int pos, E item);
-
-	/**
-	 * Change the data at the specified position in the list.
-	 * the old data at that position is returned.
-	 * <br>pre: 0 <= pos < size()
-	 * <br>post: get(pos) = item, return the
-	 * old get(pos)
-     * @param pos the position in the list to overwrite	 
-	 * @param item the new item that will overwrite the old item
-	 * @return the old data at the specified position
-	 */
-	E set(int pos, E item);
-
-	/**
-	 * Get an element from the list.
-	 * <br>pre: 0 <= pos < size()
-	 * <br>post: return the item at pos
-	 * @param pos specifies which element to get
-	 * @return the element at the specified position in the list
-	 */
-	E get(int pos);
-
-
-	/**
-	 * Remove an element in the list based on position.
-	 * <br>pre: 0 <= pos < size()
-	 * <br>post: size() = old size() - 1, all elements of
-	 * list with a positon > pos have a position = old position - 1
-	 * @param pos the position of the element to remove from the list
-	 * @return the data at position pos
-	 */
-	E remove(int pos);
-	
-	/**
-	 * Remove the first occurrence of obj in this list.
-	 * Return <tt>true</tt> if this list changed as a result of this call, <tt>false</tt> otherwise.
-	 * <br>pre: none
-	 * <br>post: if obj is in this list the first occurence has been removed and size() = old size() - 1. 
-	 * If obj is not present the list is not altered in any way.
-	 * @param obj The item to remove from this list.
-	 * @return Return <tt>true</tt> if this list changed as a result of this call, <tt>false</tt> otherwise.
-	 */
-	boolean remove(E obj);
-	
-	/**
-	 * Return a sublist of elements in this list from <tt>start</tt> inclusive to <tt>stop</tt> exclusive.
-	 * This list is not changed as a result of this call.
-	 * <br>pre: <tt>0 <= start < size(), start <= stop <= size()</tt>
-	 * <br>post: return a list whose size is stop - start and contains the elements at positions start through stop - 1 in this list.
-	 * @param start index of the first element of the sublist.
-	 * @param stop stop - 1 is the index of the last element of the sublist.
-	 * @return a list with <tt>stop - start</tt> elements, The elements are from positions <tt>start</tt> inclusive to
-	 * <tt>stop</tt> exclusive in this list.
-	 */
-	IList<E> getSubList(int start, int stop);
-
-	/**
-	 * Return the size of this list. In other words the number of elements in this list.
-	 * <br>pre: none
-	 * <br>post: return the number of items in this list
-	 * @return the number of items in this list
-	 */
-	int size();
-
-	/**
-	 * Find the position of an element in the list.
-	 * <br>pre: none
-	 * <br>post: return the index of the first element equal to item
-	 * or -1 if item is not present
-	 * @param item the element to search for in the list
-	 * @return return the index of the first element equal to item or a -1 if item is not present
-	 */
-	int indexOf(E item);
-
-	/**
-	 * find the position of an element in the list starting at a specified position.
-	 * <br>pre: 0 <= pos < size()
-	 * <br>post: return the index of the first element equal to item starting at pos
-	 * or -1 if item is not present from position pos onward
-	 * @param item the element to search for in the list
-	 * @param pos the position in the list to start searching from
-	 * @return starting from the specified position return the index of the first element equal to item or a -1 if item is not present between pos and the end of the list
-	 */
-	int indexOf(E item, int pos);
-
-	/**
-	 * return the list to an empty state.
-	 * <br>pre: none
-	 * <br>post: size() = 0
-	 */
-	void makeEmpty();
-
-	/**
-	* return an Iterator for this list.
-	* <br>pre: none
-	* <br>post: return an Iterator object for this List
-	*/
-    Iterator<E> iterator();
-
-    /**
-     * Remove all elements in this list from <tt>start</tt> inclusive to <tt>stop</tt> exclusive.
-     * <br>pre: <tt>0 <= start < size(), start <= stop <= size()</tt>
-     * <br>post: <tt>size() = old size() - (stop - start)</tt>
-     * @param start position at beginning of range of elements to be removed
-     * @param stop stop - 1 is the position at the end of the range of elements to be removed
-     */
-    void removeRange(int start, int stop);
-    
-    /**
-     * Return a String version of this list enclosed in
-     * square brackets, []. Elements are in
-     * are in order based on position in the 
-     * list with the first element
-     * first. Adjacent elements are seperated by comma's
-     * @return a String representation of this IList
-     */
-    public String toString();
-    
-    /**
-     * Determine if this IList is equal to other. Two
-     * ILists are equal if they contain the same elements
-     * in the same order.
-     * @return true if this IList is equal to other, false otherwise
-     */
-    public boolean equals(Object other);
-}
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-
-public class AirlineProblem {
-
-    public static void main(String[] args){
-        Scanner scannerToReadAirlines = null;
-        try{
-            scannerToReadAirlines = new Scanner(new File("airlines.txt"));
-        }
-        catch(IOException e){
-            System.out.println("Could not connect to file airlines.txt.");
-            System.exit(0);
-        }
-        if(scannerToReadAirlines != null){
-            ArrayList<Airline> airlinesPartnersNetwork = new ArrayList<Airline>();
-            Airline newAirline;
-            String lineFromFile;
-            String[] airlineNames;
-            
-            while( scannerToReadAirlines.hasNext() ){
-                lineFromFile = scannerToReadAirlines.nextLine();
-                airlineNames = lineFromFile.split(",");
-                newAirline = new Airline(airlineNames);
-                airlinesPartnersNetwork.add( newAirline );
-            }
-            System.out.println(airlinesPartnersNetwork);
-            Scanner keyboard = new Scanner(System.in);
-            System.out.print("Enter airline miles are on: ");
-            String start = keyboard.nextLine();
-            System.out.print("Enter goal airline: ");
-            String goal = keyboard.nextLine();
-            ArrayList<String> pathForMiles = new ArrayList<String>();
-            ArrayList<String> airlinesVisited = new ArrayList<String>();
-            if( canRedeem(start, goal, pathForMiles, airlinesVisited, airlinesPartnersNetwork))
-                System.out.println("Path to redeem miles: " + pathForMiles);
-            else
-                System.out.println("Cannot convert miles from " + start + " to " + goal + ".");
-        }
-    }
-    
-    private static boolean canRedeem(String current, String goal,
-            ArrayList<String> pathForMiles, ArrayList<String> airlinesVisited,
-            ArrayList<Airline> network){
-        if(current.equals(goal)){
-            //base case 1, I have found a path!
-            pathForMiles.add(current);
-            return true;
-        }
-        else if(airlinesVisited.contains(current))
-            // base case 2, I have already been here
-            // don't go into a cycle
-            return false;
-        else{
-            // I have not been here and it isn't
-            // the goal so check its partners
-            // now I have been here
-            airlinesVisited.add(current);
-            
-            // add this to the path
-            pathForMiles.add(current);
-            
-            // find this airline in the network
-            int pos = -1;
-            int index = 0;
-            while(pos == -1 && index < network.size()){
-                if(network.get(index).getName().equals(current))
-                    pos = index;
-                index++;
-            }
-            //if not in the network, no partners
-            if( pos == - 1)
-                return false;
-            
-            // loop through partners
-            index = 0;
-            String[] partners = network.get(pos).getPartners();
-            boolean foundPath = false;
-            while( !foundPath && index < partners.length){
-                foundPath = canRedeem(partners[index], goal, pathForMiles, airlinesVisited, network);
-                index++;
-            }
-            if( !foundPath )
-                pathForMiles.remove( pathForMiles.size() - 1);
-            return foundPath;
-        }
-    }
-
-    private static class Airline{
-        private String name;
-        private ArrayList<String> partners;
-        
-        //pre: data != null, data.length > 0
-        public Airline(String[] data){
-            assert data != null && data.length > 0 : "Failed precondition";
-            name = data[0];
-            partners = new ArrayList<String>();
-            for(int i = 1; i < data.length; i++)
-                partners.add( data[i] );
-        }
-        
-        public String[] getPartners(){
-            return partners.toArray(new String[partners.size()]);
-        }
-        
-        public boolean isPartner(String name){
-            return partners.contains(name);
-        }
-        
-        public String getName(){
-            return name;
-        }
-        
-        public String toString(){
-            return name + ", partners: " + partners;
-        }
-    }
-}
-
-public class IntListTesterVer1 {
-    public static void main(String[] args){
-        IntListVer1 list1 = new IntListVer1();
-        IntListVer1 list2 = new IntListVer1(100);
-        
-        //equal when empty?
-        System.out.println("list1.equals(list2): " + list1.equals(list2));
-        System.out.println("list1: " + list1);
-        System.out.println("list2: " + list2);
-    }
-}
-public class RecursionExampleDirectory
-{	
-	public int getSize(Directory dir)
-	{	int total = 0;
-	
-		//check files
-		File[] files = dir.getFiles();
-		for(int i = 0; i < files.length; i++)
-			total += files[i].getSize();
-			
-		//get sub directories and check them
-		Directory[] subs = dir.getSubs();
-		for(int i = 0; i < subs.length; i++)
-			total += getSize(subs[i]);
-			
-		return total;
-	}
-	
-	public static void main(String[] args)
-	{	RecursionExampleDirectory r = new RecursionExampleDirectory();
-		Directory d = new Directory();
-		System.out.println( r.getSize(d) );
-	}
-	
-	//pre: n >= 0
-	public static int fact(int n)
-	{	int result = 0;
-		if(n == 0)
-			result = 1;
-		else
-			result = n * fact(n-1);
-		return result;
-	}
-	
-	//pre: exp >= 0
-	public static int pow(int base, int exp)
-	{	int result = 0;
-		if(exp == 0)
-			result = 1;
-		else
-			result = base * pow(base, exp - 1);
-		return result;
-	}
-	
-	//slow fib
-	//pre: n >= 1
-	public static int fib(int n)
-	{	int result = 0;
-		if(n == 1 || n == 2)
-			result = 1;
-		else
-			result = fib(n-1) + fib(n-2);
-		return result;
-	}
-	
-	public static int minWasted(int[] items, int itemNum, int capLeft)
-	{	int result = 0;
-		if(itemNum >= items.length)
-			result = capLeft;
-		else if( capLeft == 0)
-			result = 0;
-		else
-		{	int minWithout = minWasted(items, itemNum + 1, capLeft);
-			if( capLeft <= items[itemNum])		
-			{	int minWith = minWasted(items, itemNum + 1, capLeft - items[itemNum]);
-				result = Math.min(minWith, minWithout);
-			}
-			else
-				result = minWithout;
+public class dataTypes {
+	public static void main(String[] args) {
+		String firstName = "John ";
+		String lastName = "Doe";
+		String fullName = firstName + lastName;
+		System.out.println(fullName);
+		int myNum = 5;               // Integer (whole number)
+		float myFloatNum = 5.99f;    // Floating point number
+		char myLetter = 'D';         // Character
+		boolean myBool = true;       // Boolean
+		String myText = "Hello";  
+		float f1 = 35e3f;
+		double d1 = 12E4d;
+		System.out.println(f1);
+		System.out.println(d1);
+		boolean isJavaFun = true;
+		boolean isFishTasty = false;
+		System.out.println(isJavaFun);     // Outputs true
+		System.out.println(isFishTasty);
+		char a = 65, b = 66, c = 67;
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+		Math.max(5, 10);
+		Math.min(5, 10);
+		Math.sqrt(64);
+		Math.abs(-4.7);
+		Math.random();
+		int time = 20;
+		if (time < 18) {
+		  System.out.println("Good day.");
+		} else {
+		  System.out.println("Good evening.");
 		}
-		return result;	
+		int time = 22;
+		if (time < 10) {
+		  System.out.println("Good morning.");
+		} else if (time < 20) {
+		  System.out.println("Good day.");
+		} else {
+		  System.out.println("Good evening.");
+		}
+		int day = 4;
+		switch (day) {
+		  case 6:
+			System.out.println("Today is Saturday");
+			break;
+		  case 7:
+			System.out.println("Today is Sunday");
+			break;
+		  default:
+			System.out.println("Looking forward to the Weekend");
+		}
+		int i = 0;
+		while (i < 5) {
+		  System.out.println(i);
+		  i++;
+		}
+		String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+		for (String i : cars) {
+		  System.out.println(i);
+		}
+		for (int i = 0; i <= 10; i = i + 2) {
+		  System.out.println(i);
+		}
+		for (int i = 0; i < 10; i++) {
+		  if (i == 4) {
+			continue;
+		  }
+		  System.out.println(i);
+		} 
 	}
 }
 
-class Directory
-{	private Directory[] mySubs;
-	private File[] myFiles;
-	
-	public Directory()
-	{	int numSubs = (int)(Math.random() * 3);
-		mySubs = new Directory[numSubs];
-		int numFiles = (int)(Math.random() * 10);
-		myFiles = new File[numFiles];
-		
-		for(int i = 0; i < myFiles.length; i++)
-			myFiles[i] = new File( (int)(Math.random() * 1000 ) );
-		for(int i = 0; i < mySubs.length; i++)
-			mySubs[i] = new Directory();
-	}
-	
-	public Directory[] getSubs()
-	{	return mySubs;
-	}
-	
-	public File[] getFiles()
-	{	return myFiles;
-	}
+public class MyClass {
+  public static void main(String[] args) {
+    int myInt = 9;
+    double myDouble = myInt; // Automatic casting: int to double
+
+    System.out.println(myInt);      // Outputs 9
+    System.out.println(myDouble);   // Outputs 9.0
+  }
 }
 
-class File
-{	private int iMySize;
+public class MyClass {
+  public static void main(String[] args) {
+    double myDouble = 9.78;
+    int myInt = (int) myDouble; // Manual casting: double to int
 
-	public File(int size)
-	{	iMySize = size;
-	}
-	
-	public int getSize()
-	{	return iMySize;
-	}
+    System.out.println(myDouble);   // Outputs 9.78
+    System.out.println(myInt);      // Outputs 9
+  }
 }
 
-
-import java.util.LinkedList;
-import java.lang.reflect.Array;
-
-public class UnsortedHashSet<E> {
-   
-    private static final double LOAD_FACTOR_LIMIT = 0.7;
-    
-    private int size;
-    private LinkedList<E>[] con;
-    
-    public UnsortedHashSet() {
-        con  = (LinkedList<E>[])(new LinkedList[10]);
+public class MyClass {
+  public static void main(String[] args) {
+    try {
+      int[] myNumbers = {1, 2, 3};
+      System.out.println(myNumbers[10]);
+    } catch (Exception e) {
+      System.out.println("Something went wrong.");
+    } finally {
+      System.out.println("The 'try catch' is finished.");
     }
-    
-    public boolean add(E obj) {
-        int oldSize = size;
-        int index = Math.abs(obj.hashCode()) % con.length;
-        if(con[index] == null)
-            con[index] = new LinkedList<E>();
-        if(!con[index].contains(obj)) {
-            con[index].add(obj);
-            size++;
-            
-        }
-        if(1.0 * size / con.length > LOAD_FACTOR_LIMIT)
-            resize();
-        return oldSize != size;
-    }
-
-    private void resize() {
-        UnsortedHashSet<E> temp = new UnsortedHashSet<E>();
-        temp.con = (LinkedList<E>[])(new LinkedList[con.length * 2 + 1]);
-        for(int i = 0; i < con.length; i++){
-            if(con[i] != null)
-                for(E e : con[i])
-                    temp.add(e);
-        }
-        con = temp.con;
-    }
-    
-    public int size() {
-        return size;
-    }
-}
-public class PrimitiveParameters
-{	
-	public static void main(String[] args)
-	{	go();
-	}
-	
-	public static void go()
-	{	int x = 3;
-		int y = 2;
-		System.out.println("In method go. x: " + x + " y: " + y);
-		falseSwap(x,y);
-		System.out.println("in method go. x: " + x + " y: " + y);
-		moreParameters(x,y);
-		System.out.println("in method go. x: " + x + " y: " + y);
-	}
-	
-	public static void falseSwap(int x, int y)
-	{	System.out.println("in method falseSwap. x: " + x + " y: " + y);
-		int temp = x;
-		x = y;
-		y = temp;
-		System.out.println("in method falseSwap. x: " + x + " y: " + y);
-	}
-	
-	public static void moreParameters(int a, int b)
-	{	System.out.println("in method moreParameters. a: " + a + " b: " + b);
-		a = a * b;
-		b = 12;
-		System.out.println("in method moreParameters. a: " + a + " b: " + b);
-		falseSwap(b,a);
-		System.out.println("in method moreParameters. a: " + a + " b: " + b);	
-	}
+  }
 }
 
-public class CountArray {  
-    public static void main(String[] args) {  
-      //Initialize array  
-        int [] arr = new int [] {1, 2, 3, 4, 5};  
-      //Number of elements present in an array can be found using the length  
-        System.out.println("Number of elements present in given array: " + arr.length);  
+public class MyClass {
+
+  // Create a checkAge() method with an integer variable called age
+  static void checkAge(int age) {
+
+    // If age is less than 18, print "access denied"
+    if (age < 18) {
+      System.out.println("Access denied - You are not old enough!"); 
+
+    // If age is greater than 18, print "access granted"
+    } else {
+      System.out.println("Access granted - You are old enough!"); 
+    }
+
+  } 
+
+  public static void main(String[] args) { 
+    checkAge(20); // Call the checkAge method and pass along an age of 20
+  } 
+}
+
+class MyThread extends Thread { 
+    public void run() 
+    { 
+        System.out.println("Current thread name: "
+                           + Thread.currentThread().getName()); 
+        System.out.println("run() method called"); 
+    } 
+} 
+  
+class GeeksforGeeks { 
+    public static void main(String[] args) 
+    { 
+        MyThread t = new MyThread(); 
+        t.start(); 
+    } 
+} 
+
+import java.util.*; 
+  
+public class GFG { 
+    public static void main(String[] args) 
+    { 
+        // Create a list of strings 
+        ArrayList<String> al = new ArrayList<String>(); 
+        al.add("Geeks For Geeks"); 
+        al.add("Friends"); 
+        al.add("Dear"); 
+        al.add("Is"); 
+        al.add("Superb"); 
+  
+        /* Collections.sort method is sorting the 
+        elements of ArrayList in ascending order. */
+        Collections.sort(al); 
+  
+        // Let us print the sorted list 
+        System.out.println("List after the use of"
+                           + " Collection.sort() :\n" + al); 
+    } 
+} 
+
+import java.util.Arrays; 
+  
+public class GFG { 
+    public static void main(String[] args) 
+    { 
+        int[] arr = { 13, 7, 6, 45, 21, 9, 101, 102 }; 
+  
+        Arrays.sort(arr); 
+  
+        System.out.printf("Modified arr[] : %s", 
+                          Arrays.toString(arr)); 
+    } 
+} 
+
+import java.util.Arrays; 
+import java.util.Collections; 
+  
+public class GFG { 
+    public static void main(String[] args) 
+    { 
+        // Note that we have Integer here instead of 
+        // int[] as Collections.reverseOrder doesn't 
+        // work for primitive types. 
+        Integer[] arr = { 13, 7, 6, 45, 21, 9, 2, 100 }; 
+  
+        // Sorts arr[] in descending order 
+        Arrays.sort(arr, Collections.reverseOrder()); 
+  
+        System.out.printf("Modified arr[] : %s", 
+                          Arrays.toString(arr)); 
+    } 
+} 
+
+import java.util.Arrays; 
+  
+public class GFG { 
+    public static void main(String[] args) 
+    { 
+        // Our arr contains 8 elements 
+        int[] arr = { 13, 7, 6, 45, 21, 9, 2, 100 }; 
+  
+        // Sort subarray from index 1 to 4, i.e., 
+        // only sort subarray {7, 6, 45, 21} and 
+        // keep other elements as it is. 
+        Arrays.sort(arr, 1, 5); 
+  
+        System.out.printf("Modified arr[] : %s", 
+                          Arrays.toString(arr)); 
+    } 
+} 
+
+import java.io.File; 
+import java.io.IOException; 
+import java.io.RandomAccessFile; 
+import java.lang.NumberFormatException; 
+  
+class AddFriend { 
+  
+    public static void main(String data[]) 
+    { 
+  
+        try { 
+  
+            // Get the name of the contact to be updated 
+            // from the Command line argument 
+            String newName = data[0]; 
+  
+            // Get the number to be updated 
+            // from the Command line argument 
+            long newNumber = Long.parseLong(data[1]); 
+  
+            String nameNumberString; 
+            String name; 
+            long number; 
+            int index; 
+  
+            // Using file pointer creating the file. 
+            File file = new File("friendsContact.txt"); 
+  
+            if (!file.exists()) { 
+  
+                // Create a new file if not exists. 
+                file.createNewFile(); 
+            } 
+  
+            // Opening file in reading and write mode. 
+  
+            RandomAccessFile raf 
+                = new RandomAccessFile(file, "rw"); 
+            boolean found = false; 
+  
+            // Checking whether the name 
+            // of contact already exists. 
+            // getFilePointer() give the current offset 
+            // value from start of the file. 
+            while (raf.getFilePointer() < raf.length()) { 
+  
+                // reading line from the file. 
+                nameNumberString = raf.readLine(); 
+  
+                // finding the position of '!' 
+                index = nameNumberString.indexOf('!'); 
+  
+                // separating name and number. 
+                name = nameNumberString 
+                           .substring(0, index); 
+                number 
+                    = Long 
+                          .parseLong( 
+                              nameNumberString 
+                                  .substring(index + 1)); 
+  
+                // if condition to find existence of record. 
+                if (name == newName || number == newNumber) { 
+                    found = true; 
+                    break; 
+                } 
+            } 
+  
+            if (found == false) { 
+  
+                // Enter the if block when a record 
+                // is not already present in the file. 
+                nameNumberString 
+                    = newName 
+                      + "!"
+                      + String.valueOf(newNumber); 
+  
+                // writeBytes function to write a string 
+                // as a sequence of bytes. 
+                raf.writeBytes(nameNumberString); 
+  
+                // To insert the next record in new line. 
+                raf.writeBytes(System.lineSeparator()); 
+  
+                // Print the message 
+                System.out.println(" Friend added. "); 
+  
+                // Closing the resources. 
+                raf.close(); 
+            } 
+            // The contact to be updated 
+            // could not be found 
+            else { 
+  
+                // Closing the resources. 
+                raf.close(); 
+  
+                // Print the message 
+                System.out.println(" Input name"
+                                   + " does not exists. "); 
+            } 
+        } 
+  
+        catch (IOException ioe) { 
+  
+            System.out.println(ioe); 
+        } 
+        catch (NumberFormatException nef) { 
+  
+            System.out.println(nef); 
+        } 
+    } 
+} 
+
+import java.io.FileWriter; 
+import java.io.IOException; 
+class CreateFile 
+{ 
+    public static void main(String[] args) throws IOException 
+    { 
+        // Accept a string  
+        String str = "File Handling in Java using "+ 
+                " FileWriter and FileReader"; 
+  
+        // attach a file to FileWriter  
+        FileWriter fw=new FileWriter("output.txt"); 
+  
+        // read character wise from string and write  
+        // into FileWriter  
+        for (int i = 0; i < str.length(); i++) 
+            fw.write(str.charAt(i)); 
+  
+        System.out.println("Writing successful"); 
+        //close the file  
+        fw.close(); 
+    } 
+}
+
+import java.io.FileNotFoundException; 
+import java.io.FileReader; 
+import java.io.IOException; 
+class ReadFile 
+{ 
+    public static void main(String[] args) throws IOException 
+    { 
+        // variable declaration 
+        int ch; 
+  
+        // check if File exists or not 
+        FileReader fr=null; 
+        try
+        { 
+            fr = new FileReader("text"); 
+        } 
+        catch (FileNotFoundException fe) 
+        { 
+            System.out.println("File not found"); 
+        } 
+  
+        // read from FileReader till the end of file 
+        while ((ch=fr.read())!=-1) 
+            System.out.print((char)ch); 
+  
+        // close the file 
+        fr.close(); 
+    } 
+} 
+
+class Sample 
+{ 
+  
+} 
+  
+// Class Declaration 
+class Student 
+{ 
+  
+} 
+// Class Declaration 
+class Test 
+{ 
+       public static void main(String[] args)    
+       { 
+           System.out.println("Class File Structure"); 
+       } 
+} 
+
+public class Sum { 
+  
+    // Overloaded sum(). 
+    // This sum takes two int parameters 
+    public int sum(int x, int y) 
+    { 
+        return (x + y); 
+    } 
+  
+    // Overloaded sum(). 
+    // This sum takes three int parameters 
+    public int sum(int x, int y, int z) 
+    { 
+        return (x + y + z); 
+    } 
+  
+    // Overloaded sum(). 
+    // This sum takes two double parameters 
+    public double sum(double x, double y) 
+    { 
+        return (x + y); 
+    } 
+  
+    // Driver code 
+    public static void main(String args[]) 
+    { 
+        Sum s = new Sum(); 
+        System.out.println(s.sum(10, 20)); 
+        System.out.println(s.sum(10, 20, 30)); 
+        System.out.println(s.sum(10.5, 20.5)); 
+    } 
+} 
+
+public class Car {
+  int modelYear;
+  String modelName;
+
+  public Car(int year, String name) {
+    modelYear = year;
+    modelName = name;
+  }
+
+  public static void main(String[] args) {
+    Car myCar = new Car(1969, "Mustang");
+    System.out.println(myCar.modelYear + " " + myCar.modelName);
+  }
+}
+
+public class Person {
+  String fname = "John";
+  String lname = "Doe";
+  int age = 24;
+
+  public static void main(String[] args) {
+    Person myObj = new Person();
+    System.out.println("Name: " + myObj.fname + " " + myObj.lname);
+    System.out.println("Age: " + myObj.age);
+  }
+}
+
+public class Car {
+ 
+  // Create a fullThrottle() method
+  public void fullThrottle() {
+    System.out.println("The car is going as fast as it can!");
+  }
+
+  // Create a speed() method and add a parameter
+  public void speed(int maxSpeed) {
+    System.out.println("Max speed is: " + maxSpeed);
+  }
+
+  // Inside main, call the methods on the myCar object
+  public static void main(String[] args) {
+    Car myCar = new Car();     // Create a myCar object
+    myCar.fullThrottle();      // Call the fullThrottle() method
+    myCar.speed(200);          // Call the speed() method
+  }
+}
+
+
+abstract class Person {
+  public String fname = "John";
+  public int age = 24;
+  public abstract void study(); // abstract method 
+}
+
+// Subclass (inherit from Person)
+class Student extends Person {
+  public int graduationYear = 2018;
+  public void study() { // the body of the abstract method is provided here
+    System.out.println("Studying all day long");
+  }
+}
+// End code from filename: Person.java
+
+// Code from filename: MyClass.java
+class MyClass {
+  public static void main(String[] args) {
+    // create an object of the Student class (which inherits attributes and methods from Person)
+    Student myObj = new Student(); 
+
+    System.out.println("Name: " + myObj.fname);
+    System.out.println("Age: " + myObj.age);
+    System.out.println("Graduation Year: " + myObj.graduationYear);
+    myObj.study(); // call abstract method
+  }
+}
+
+public class Person {
+  private String name; // private = restricted access
+
+  // Getter
+  public String getName() {
+    return name;
+  }
+
+  // Setter
+  public void setName(String newName) {
+    this.name = newName;
+  }
+}
+
+import java.util.Scanner;
+
+class MyClass {
+  public static void main(String[] args) {
+    Scanner myObj = new Scanner(System.in);
+    System.out.println("Enter username");
+
+    String userName = myObj.nextLine(); 
+    System.out.println("Username is: " + userName); 
+  }
+}
+
+class Vehicle {
+  protected String brand = "Ford";         // Vehicle attribute
+  public void honk() {                     // Vehicle method
+    System.out.println("Tuut, tuut!");
+  }
+}
+
+class Car extends Vehicle {
+  private String modelName = "Mustang";    // Car attribute
+  public static void main(String[] args) {
+
+    // Create a myCar object
+    Car myCar = new Car();
+
+    // Call the honk() method (from the Vehicle class) on the myCar object
+    myCar.honk();
+
+    // Display the value of the brand attribute (from the Vehicle class) and the value of the modelName from the Car class
+    System.out.println(myCar.brand + " " + myCar.modelName); 
+  }
+}
+
+class Animal {
+  public void animalSound() {
+    System.out.println("The animal makes a sound");
+  }
+}
+
+class Pig extends Animal {
+  public void animalSound() {
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+class Dog extends Animal {
+  public void animalSound() {
+    System.out.println("The dog says: bow wow");
+  }
+}
+
+class MyMainClass {
+  public static void main(String[] args) {
+    Animal myAnimal = new Animal();  // Create a Animal object
+    Animal myPig = new Pig();  // Create a Pig object
+    Animal myDog = new Dog();  // Create a Dog object
+
+    myAnimal.animalSound();
+    myPig.animalSound();
+    myDog.animalSound();
+  }
+}
+
+abstract class Animal {
+  // Abstract method (does not have a body)
+  public abstract void animalSound();
+  // Regular method
+  public void sleep() {
+    System.out.println("Zzz");
+  }
+}
+
+// Subclass (inherit from Animal)
+class Pig extends Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+class MyMainClass {
+  public static void main(String[] args) {
+    Pig myPig = new Pig(); // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+
+interface Animal {
+  public void animalSound(); // interface method (does not have a body)
+  public void sleep(); // interface method (does not have a body)
+}
+
+// Pig "implements" the Animal interface
+class Pig implements Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+  public void sleep() {
+    // The body of sleep() is provided here
+    System.out.println("Zzz");
+  }
+}
+
+class MyMainClass {
+  public static void main(String[] args) {
+    Pig myPig = new Pig();  // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+
+enum Level {
+  LOW,
+  MEDIUM,
+  HIGH
+}
+public static void main(String[] args) {
+    Level myVar = Level.MEDIUM; 
+
+    switch(myVar) {
+      case LOW:
+        System.out.println("Low level");
+        break;
+      case MEDIUM:
+         System.out.println("Medium level");
+        break;
+      case HIGH:
+        System.out.println("High level");
+        break;
+    }
+}
+
+import java.time.LocalDateTime; // Import the LocalDateTime class
+import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+
+public class MyClass {
+  public static void main(String[] args) { 
+    LocalDateTime myDateObj = LocalDateTime.now(); 
+    System.out.println("Before formatting: " + myDateObj); 
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"); 
+
+    String formattedDate = myDateObj.format(myFormatObj); 
+    System.out.println("After formatting: " + formattedDate); 
+  } 
+}
+
+import java.util.ArrayList;
+import java.util.Collections;  // Import the Collections class
+import java.util.HashMap;
+public static void main(String[] args) { 
+    ArrayList<Integer> myNumbers = new ArrayList<Integer>();
+    myNumbers.add(33);
+    myNumbers.add(15);
+    myNumbers.add(20);
+    myNumbers.add(34);
+    myNumbers.add(8);
+    myNumbers.add(12);
+	HashMap<String, String> capitalCities = new HashMap<String, String>();
+
+    // Add keys and values (Country, City)
+    capitalCities.put("England", "London");
+    capitalCities.put("Germany", "Berlin");
+    capitalCities.put("Norway", "Oslo");
+    capitalCities.put("USA", "Washington DC");
+    System.out.println(capitalCities); 
+
+    Collections.sort(myNumbers);  // Sort myNumbers
+
+    for (int i : myNumbers) {
+      System.out.println(i);
+    }
+} 
+
+import java.io.File;  // Import the File class
+import java.io.IOException;  // Import the IOException class to handle errors
+
+public class CreateFile { 
+  public static void main(String[] args) { 
+    try { 
+      File myObj = new File("filename.txt"); 
+      if (myObj.createNewFile()) { 
+        System.out.println("File created: " + myObj.getName()); 
+      } else { 
+        System.out.println("File already exists."); 
+      } 
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace(); 
+    } 
+  } 
+}
+
+import java.io.File; 
+
+public class GetFileInfo { 
+  public static void main(String[] args) { 
+    File myObj = new File("filename.txt");
+    if (myObj.exists()) {
+      System.out.println("File name: " + myObj.getName()); 
+      System.out.println("Absolute path: " + myObj.getAbsolutePath()); 
+      System.out.println("Writeable: " + myObj.canWrite()); 
+      System.out.println("Readable " + myObj.canRead()); 
+      System.out.println("File size in bytes " + myObj.length());
+    } else {
+      System.out.println("The file does not exist.");
+    }
+  } 
+}
+
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;  // Import the IOException class to handle errors
+
+public class WriteToFile { 
+  public static void main(String[] args) { 
+    try { 
+      FileWriter myWriter = new FileWriter("filename.txt");
+      myWriter.write("Files in Java might be tricky, but it is fun enough!");
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    } 
+  } 
+}
+
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class ReadFile { 
+  public static void main(String[] args) { 
+    try {
+      File myObj = new File("filename.txt");
+      Scanner myReader = new Scanner(myObj); 
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        System.out.println(data);
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    } 
+  } 
+}
+
+import package_one.ClassTwo; 
+import package_name.ClassOne; 
+  
+public class Testing { 
+    public static void main(String[] args){ 
+        ClassTwo a = new ClassTwo(); 
+        ClassOne b = new ClassOne(); 
+        a.methodClassTwo(); 
+        b.methodClassOne(); 
+    } 
+} 
+
+import java.util.*; 
+import java.util.stream.*; 
+  
+class Demo 
+{ 
+  public static void main(String args[]) 
+  { 
+  
+    // create a list of integers 
+    List<Integer> number = Arrays.asList(2,3,4,5); 
+  
+    // demonstration of map method 
+    List<Integer> square = number.stream().map(x -> x*x). 
+                           collect(Collectors.toList()); 
+    System.out.println(square); 
+  
+    // create a list of String 
+    List<String> names = 
+                Arrays.asList("Reflection","Collection","Stream"); 
+  
+    // demonstration of filter method 
+    List<String> result = names.stream().filter(s->s.startsWith("S")). 
+                          collect(Collectors.toList()); 
+    System.out.println(result); 
+  
+    // demonstration of sorted method 
+    List<String> show = 
+            names.stream().sorted().collect(Collectors.toList()); 
+    System.out.println(show); 
+  
+    // create a list of integers 
+    List<Integer> numbers = Arrays.asList(2,3,4,5,2); 
+  
+    // collect method returns a set 
+    Set<Integer> squareSet = 
+         numbers.stream().map(x->x*x).collect(Collectors.toSet()); 
+    System.out.println(squareSet); 
+  
+    // demonstration of forEach method 
+    number.stream().map(x->x*x).forEach(y->System.out.println(y)); 
+  
+    // demonstration of reduce method 
+    int even = 
+       number.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i); 
+  
+    System.out.println(even); 
+  } 
+} 
+
+// Create a Car class
+public class Car {
+ 
+  // Create a fullThrottle() method
+  public void fullThrottle() {
+    System.out.println("The car is going as fast as it can!");
+  }
+
+  // Create a speed() method and add a parameter
+  public void speed(int maxSpeed) {
+    System.out.println("Max speed is: " + maxSpeed);
+  }
+
+  // Inside main, call the methods on the myCar object
+  public static void main(String[] args) {
+    Car myCar = new Car();     // Create a myCar object
+    myCar.fullThrottle();      // Call the fullThrottle() method
+    myCar.speed(200);          // Call the speed() method
+  }
+}
+
+final class MyClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+
+public class Example
+{
+   public void reverseWordInMyString(String str)
+   {
+	/* The split() method of String class splits
+	 * a string in several strings based on the
+	 * delimiter passed as an argument to it
+	 */
+	String[] words = str.split(" ");
+	String reversedString = "";
+	for (int i = 0; i < words.length; i++)
+        {
+           String word = words[i]; 
+           String reverseWord = "";
+           for (int j = word.length()-1; j >= 0; j--) 
+	   {
+		/* The charAt() function returns the character
+		 * at the given position in a string
+		 */
+		reverseWord = reverseWord + word.charAt(j);
+	   }
+	   reversedString = reversedString + reverseWord + " ";
+	}
+	System.out.println(str);
+	System.out.println(reversedString);
+   }
+   public static void main(String[] args) 
+   {
+	Example obj = new Example();
+	obj.reverseWordInMyString("Welcome to BeginnersBook");
+	obj.reverseWordInMyString("This is an easy Java Program");
+   }
+}
+
+import java.util.Scanner;
+class PrimeCheck
+{
+   public static void main(String args[])
+   {		
+	int temp;
+	boolean isPrime=true;
+	Scanner scan= new Scanner(System.in);
+	System.out.println("Enter any number:");
+	//capture the input in an integer
+	int num=scan.nextInt();
+        scan.close();
+	for(int i=2;i<=num/2;i++)
+	{
+           temp=num%i;
+	   if(temp==0)
+	   {
+	      isPrime=false;
+	      break;
+	   }
+	}
+	//If isPrime is true then the number is prime else not
+	if(isPrime)
+	   System.out.println(num + " is a Prime Number");
+	else
+	   System.out.println(num + " is not a Prime Number");
+   }
+}
+
+class SumOfArray{
+   public static void main(String args[]){
+      int[] array = {10, 20, 30, 40, 50, 10};
+      int sum = 0;
+      //Advanced for loop
+      for( int num : array) {
+          sum = sum+num;
+      }
+      System.out.println("Sum of array elements is:"+sum);
+   }
+}
+
+package beginnersbook.com;
+import java.util.Scanner;
+class PalindromeCheck
+{
+    //My Method to check
+    public static boolean isPal(String s)
+    {   // if length is 0 or 1 then String is palindrome
+        if(s.length() == 0 || s.length() == 1)
+            return true; 
+        if(s.charAt(0) == s.charAt(s.length()-1))
+        /* check for first and last char of String:
+         * if they are same then do the same thing for a substring
+         * with first and last char removed. and carry on this
+         * until you string completes or condition fails
+         * Function calling itself: Recursion
+         */
+        return isPal(s.substring(1, s.length()-1));
+
+        /* If program control reaches to this statement it means
+         * the String is not palindrome hence return false.
+         */
+        return false;
+    }
+
+    public static void main(String[]args)
+    {
+    	//For capturing user input
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the String for check:");
+        String string = scanner.nextLine();
+        /* If function returns true then the string is
+         * palindrome else not
+         */
+        if(isPal(string))
+            System.out.println(string + " is a palindrome");
+        else
+            System.out.println(string + " is not a palindrome");
+    }
+}
+
+import java.util.Scanner;
+class BinarySearchExample
+{
+   public static void main(String args[])
+   {
+      int counter, num, item, array[], first, last, middle;
+      //To capture user input
+      Scanner input = new Scanner(System.in);
+      System.out.println("Enter number of elements:");
+      num = input.nextInt(); 
+
+      //Creating array to store the all the numbers
+      array = new int[num];
+
+      System.out.println("Enter " + num + " integers");
+      //Loop to store each numbers in array
+      for (counter = 0; counter < num; counter++)
+          array[counter] = input.nextInt();
+
+      System.out.println("Enter the search value:");
+      item = input.nextInt();
+      first = 0;
+      last = num - 1;
+      middle = (first + last)/2;
+
+      while( first <= last )
+      {
+         if ( array[middle] < item )
+           first = middle + 1;
+         else if ( array[middle] == item )
+         {
+           System.out.println(item + " found at location " + (middle + 1) + ".");
+           break;
+         }
+         else
+         {
+             last = middle - 1;
+         }
+         middle = (first + last)/2;
+      }
+      if ( first > last )
+          System.out.println(item + " is not found.\n");
+   }
+}
+
+import java.util.Scanner;
+class LinearSearchExample
+{
+   public static void main(String args[])
+   {
+      int counter, num, item, array[];
+      //To capture user input
+      Scanner input = new Scanner(System.in);
+      System.out.println("Enter number of elements:");
+      num = input.nextInt(); 
+      //Creating array to store the all the numbers
+      array = new int[num]; 
+      System.out.println("Enter " + num + " integers");
+      //Loop to store each numbers in array
+      for (counter = 0; counter < num; counter++)
+        array[counter] = input.nextInt();
+
+      System.out.println("Enter the search value:");
+      item = input.nextInt();
+
+      for (counter = 0; counter < num; counter++)
+      {
+         if (array[counter] == item) 
+         {
+           System.out.println(item+" is present at location "+(counter+1));
+           /*Item is found so to stop the search and to come out of the 
+            * loop use break statement.*/
+           break;
+         }
+      }
+      if (counter == num)
+        System.out.println(item + " doesn't exist in array.");
+   }
+}
+
+import java.util.Scanner;
+class AreaTriangleDemo {
+   public static void main(String args[]) {   
+      Scanner scanner = new Scanner(System.in);
+
+      System.out.println("Enter the width of the Triangle:");
+      double base = scanner.nextDouble();
+
+      System.out.println("Enter the height of the Triangle:");
+      double height = scanner.nextDouble();
+
+      //Area = (width*height)/2
+      double area = (base* height)/2;
+      System.out.println("Area of Triangle is: " + area);      
+   }
+}
+
+import java.util.Scanner;
+class CircleDemo
+{
+   static Scanner sc = new Scanner(System.in);
+   public static void main(String args[])
+   {
+      System.out.print("Enter the radius: ");
+      /*We are storing the entered radius in double
+       * because a user can enter radius in decimals
+       */
+      double radius = sc.nextDouble();
+      //Area = PI*radius*radius
+      double area = Math.PI * (radius * radius);
+      System.out.println("The area of circle is: " + area);
+      //Circumference = 2*PI*radius
+      double circumference= Math.PI * 2*radius;
+      System.out.println( "The circumference of the circle is:"+circumference) ;
+   }
+}
+
+public enum Directions{
+	  EAST, 
+	  WEST, 
+	  NORTH, 
+	  SOUTH
+}
+public class EnumDemo
+{
+   public static void main(String args[]){
+	Directions dir = Directions.NORTH;  
+	if(dir == Directions.EAST) {
+	    System.out.println("Direction: East");
+	} else if(dir == Directions.WEST) {
+	    System.out.println("Direction: West");
+	  } else if(dir == Directions.NORTH) {
+	      System.out.println("Direction: North");
+  	    } else {
+		System.out.println("Direction: South");
+	      }
+   }
+}
+
+import java.awt.*;
+public class SimpleExample extends Frame{
+    SimpleExample(){  
+        Button b=new Button("Button!!"); 
+        
+        // setting button position on screen
+        b.setBounds(50,50,50,50);  
+        
+        //adding button into frame 
+        add(b); 
+        
+        //Setting Frame width and height
+        setSize(500,300); 
+        
+        //Setting the title of Frame
+        setTitle("This is my First AWT example"); 
+        
+        //Setting the layout for the Frame
+        setLayout(new FlowLayout());
+        
+        /* By default frame is not visible so 
+         * we are setting the visibility to true 
+         * to make it visible.
+         */
+        setVisible(true);  
     }  
-}  
-public class ThirdLargestInArrayExample{  
-public static int getThirdLargest(int[] a, int total){  
-int temp;  
-for (int i = 0; i < total; i++)   
-        {  
-            for (int j = i + 1; j < total; j++)   
-            {  
-                if (a[i] > a[j])   
-                {  
-                    temp = a[i];  
-                    a[i] = a[j];  
-                    a[j] = temp;  
-                }  
-            }  
-        }  
-       return a[total-3];  
-}  
-public static void main(String args[]){  
-int a[]={1,2,5,6,3,2};  
-int b[]={44,66,99,77,33,22,55};  
-System.out.println("Third Largest: "+getThirdLargest(a,6));  
-System.out.println("Third Largest: "+getThirdLargest(b,7));  
-}}  
-import java.util.*;  
-public class ThirdLargestInArrayExample1{  
-public static int getThirdLargest(int[] a, int total){  
-Arrays.sort(a);  
-return a[total-3];  
-}  
-public static void main(String args[]){  
-int a[]={1,2,5,6,3,2};  
-int b[]={44,66,99,77,33,22,55};  
-System.out.println("Third Largest: "+getThirdLargest(a,6));  
-System.out.println("Third Largest: "+getThirdLargest(b,7));  
-}}  
-import java.util.*;  
-public class ThirdLargestInArrayExample2{  
-public static int getThirdLargest(Integer[] a, int total){  
-List<Integer> list=Arrays.asList(a);  
-Collections.sort(list);  
-int element=list.get(total-3);  
-return element;  
-}  
-public static void main(String args[]){  
-Integer a[]={1,2,5,6,3,2};  
-Integer b[]={44,66,99,77,33,22,55};  
-System.out.println("Third Largest: "+getThirdLargest(a,6));  
-System.out.println("Third Largest: "+getThirdLargest(b,7));  
-}}  
-public class StringExample{  
-public static void main(String args[]){  
-String s1="java";//creating string by java string literal  
-char ch[]={'s','t','r','i','n','g','s'};  
-String s2=new String(ch);//converting char array to string  
-String s3=new String("example");//creating java string by new keyword  
-System.out.println(s1);  
-System.out.println(s2);  
-System.out.println(s3);  
-}}  
-public class IndexOfExample{  
-public static void main(String args[]){  
-String s1="this is index of example";  
-//passing substring  
-int index1=s1.indexOf("is");//returns the index of is substring  
-int index2=s1.indexOf("index");//returns the index of index substring  
-System.out.println(index1+"  "+index2);//2 8  
+    public static void main(String args[]){  
+         // Creating the instance of Frame
+         SimpleExample fr=new SimpleExample();  
+    }
+}
+
+import java.awt.*;
+public class Example2 {
+   Example2()
+   {
+      //Creating Frame    
+      Frame fr=new Frame();       
+      
+      //Creating a label
+      Label lb = new Label("UserId: "); 
+      
+      //adding label to the frame
+      fr.add(lb);           
+      
+      //Creating Text Field
+      TextField t = new TextField();
+      
+      //adding text field to the frame
+      fr.add(t);
+      
+      //setting frame size
+      fr.setSize(500, 300);  
+      
+      //Setting the layout for the Frame
+      fr.setLayout(new FlowLayout());
+            
+      fr.setVisible(true);                
+   }
+   public static void main(String args[])
+   {
+       Example2 ex = new Example2(); 
+   }
+}
+
+import java.awt.*;
+public class FlowLayoutDemo extends Frame{
+    // constructor
+    public FlowLayoutDemo(String title)
+    {   
+        /* It would create the Frame by calling
+         * the constructor of Frame class.
+         */
+        super(title);    
+        
+        //Setting up Flow Layout
+        setLayout(new FlowLayout());
+        
+        //Creating a button and adding it to the frame
+        Button b1 = new Button("Button:1");
+        add(b1);
+        
+        /* Adding other components to the Frame
+         */
+        Button b2 = new Button("Button:2");
+        add(b2);
+        
+        Button b3 = new Button("Button:3");
+        add(b3);
+        
+        Button b4 = new Button("Button:4");
+        add(b4);
+        
+        Button b5 = new Button("Button:5");
+        add(b5);
+        
+        Button b6 = new Button("Button:6");
+        add(b6);
+        
+        Button b7 = new Button("Button:7");
+        add(b7);
+        
+        Button b8 = new Button("Button:8");
+        add(b8);
+        /* This would set the Orientation to 
+         *  RightToLeft
+         */
+        setComponentOrientation(
+                ComponentOrientation.RIGHT_TO_LEFT);
+        
+    }
+    public static void main(String[] args)
+    {   FlowLayoutDemo screen = 
+            new FlowLayoutDemo("Flow Layout - Beginnersbook.com");
+        screen.setSize(400,150);
+        screen.setVisible(true);
+    }
+}
+
+public class MTangle
+{
+    public static void main(String[] args)
+    {
+ 	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter N : ");
+	int n=sc.nextInt();	 
+               System.out.print("Enter Symbol : ");
+	char c = sc.next().charAt(0);
+	for(int i=1;i<=n;i++)
+               {
+	 for(int j=0;j<n-i;j++)
+                       {
+                               System.out.print(" ");
+                       }
+	
+               for(int j=0;j<i;j++)
+                       {
+                               System.out.print(c);
+                       }
+                     System.out.println();
+               }             
+    }
+}
+
+public class Student implements java.io.Serializable{
+  private int stuRollNum;
+  private int stuAge;
+  private String stuName;
+  private transient String stuAddress;
+  private transient int stuHeight;
+ 
+  public Student(int roll, int age, String name,
+  String address, int height) {
+    this.stuRollNum = roll;
+    this.stuAge = age;
+    this.stuName = name;
+    this.stuAddress = address;
+    this.stuHeight = height;
+  }
+ 
+  public int getStuRollNum() {
+    return stuRollNum;
+  }
+  public void setStuRollNum(int stuRollNum) {
+    this.stuRollNum = stuRollNum;
+  }
+  public int getStuAge() {
+    return stuAge;
+  }
+  public void setStuAge(int stuAge) {
+    this.stuAge = stuAge;
+  }
+  public String getStuName() {
+    return stuName;
+  }
+  public void setStuName(String stuName) {
+    this.stuName = stuName;
+  }
+  public String getStuAddress() {
+    return stuAddress;
+  }
+  public void setStuAddress(String stuAddress) {
+    this.stuAddress = stuAddress;
+  }
+  public int getStuHeight() {
+    return stuHeight;
+  }
+  public void setStuHeight(int stuHeight) {
+    this.stuHeight = stuHeight;
+  }
+}
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+public class SendClass
+{
+  public static void main(String args[])
+  {
+    Student obj = new Student(101, 25, "Chaitanya", "Agra", 6);
+    try{ 
+      FileOutputStream fos = new FileOutputStream("Student.ser"); 
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(obj);
+      oos.close();
+      fos.close();
+      System.out.println("Serialzation Done!!");
+   }catch(IOException ioe){
+      System.out.println(ioe);
+    }
+  }
+}
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+public class AcceptClass {
+
+ public static void main(String args[])
+ {
+    Student o=null;
+    try{
+      FileInputStream fis = new FileInputStream("Student.ser");
+      ObjectInputStream ois = new ObjectInputStream(fis);
+      o = (Student)ois.readObject();
+      ois.close();
+      fis.close();
+    }
+    catch(IOException ioe)
+    {
+       ioe.printStackTrace();
+       return;
+    }catch(ClassNotFoundException cnfe)
+     {
+       System.out.println("Student Class is not found.");
+       cnfe.printStackTrace();
+       return;
+     }
+    System.out.println("Student Name:"+o.getStuName());
+    System.out.println("Student Age:"+o.getStuAge());
+    System.out.println("Student Roll No:"+o.getStuRollNum());
+    System.out.println("Student Address:"+o.getStuAddress());
+    System.out.println("Student Height:"+o.getStuHeight());
+ }
+}
+
+public class JavaExample{   
+   public static void main(String args[]){  
+        /* Here we are intentionally assigning a null 
+         * value to a reference so that the object becomes
+         * non reachable
+         */
+	JavaExample obj=new JavaExample();  
+	obj=null;  
+		
+        /* Here we are intentionally assigning reference a 
+         * to the another reference b to make the object referenced
+         * by b unusable.
+         */
+	JavaExample a = new JavaExample();
+	JavaExample b = new JavaExample();
+	b = a;
+	System.gc();  
+   }  
+   protected void finalize() throws Throwable
+   {
+        System.out.println("Garbage collection is performed by JVM");
+   }
+}
+
+class JavaExample3{
+  static int var1;
+  static String var2;
+  //This is a Static Method
+  static void disp(){
+      System.out.println("Var1 is: "+var1);
+      System.out.println("Var2 is: "+var2);
+  }
+  public static void main(String args[]) 
+  {
+      disp();
+  }
+}
+
+class Superclass
+{
+   int num = 100;
+}
+//Child class or subclass or derived class
+class Subclass extends Superclass
+{
+   /* The same variable num is declared in the Subclass
+    * which is already present in the Superclass
+    */
+    int num = 110;
+    void printNumber(){
+	System.out.println(num);
+    }
+    public static void main(String args[]){
+	Subclass obj= new Subclass();
+	obj.printNumber();	
+    }
+}
+
+class Parentclass
+{
+   //Overridden method
+   void display(){
+	System.out.println("Parent class method");
+   }
+}
+class Subclass extends Parentclass
+{
+   //Overriding method
+   void display(){
+	System.out.println("Child class method");
+   }
+   void printMsg(){
+	//This would call Overriding method
+	display();
+	//This would call Overridden method
+	super.display();
+   }
+   public static void main(String args[]){		
+	Subclass obj= new Subclass();
+	obj.printMsg(); 
+   }
+}
+
+class Parentclass
+{
+   void display(){
+	System.out.println("Parent class method");
+   }
+}
+class Subclass extends Parentclass
+{
+   void printMsg(){
+	/* This would call method of parent class,
+	 * no need to use super keyword because no other
+	 * method with the same name is present in this class
+	 */
+	display();
+   } 
+   public static void main(String args[]){
+		
+	Subclass obj= new Subclass();
+        obj.printMsg(); 
+   }
+}
+
+public class MyParentClass {
+
+    public void justaMethod() {
+        System.out.println("Parent class method");
+    }
+}
+
+
+public class MyChildClass extends MyParentClass {
+
+    @Override
+    public void justaMethod() {
+        System.out.println("Child class method");
+    }
+}
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+ 
+@Documented
+@Target(ElementType.METHOD)
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyCustomAnnotation{
+    int studentAge() default 18;
+    String studentName();
+    String stuAddress();
+    String stuStream() default "CSE";
+}
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyCustomAnnotation {
+    // ...
+}
   
-//passing substring with from index  
-int index3=s1.indexOf("is",4);//returns the index of is substring after 4th index  
-System.out.println(index3);//5 i.e. the index of another is  
-  
-//passing char value  
-int index4=s1.indexOf('s');//returns the index of s char value  
-System.out.println(index4);//3  
-}}  

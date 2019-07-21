@@ -169,7 +169,11 @@ namespace NaturalLanguageProcessing
             private List<string> stopWords;
             public StopWords()
             {
-                stopWords = new List<string>() { "to", "as", "go", "the", "of" };
+                stopWords = new List<string>()
+                {
+                    "to", "as", "go", "the", "of", "there", "hence", "example", 
+                    "To", "As", "Go", "The", "Of", "There", "Hence", "Example",
+                };
             }
             public List<string> getListOfStopWords()
             {
@@ -260,7 +264,7 @@ namespace NaturalLanguageProcessing
             private int dataLabelID;
             private int dataTagInfo;
             private string word;
-            private float trustProcent;
+            private float confidenceRate;
             public DataModel(int dataLabelID, int dataTagInfo, string word)
             {
                 this.dataLabelID = dataLabelID;
@@ -279,13 +283,13 @@ namespace NaturalLanguageProcessing
             {
                 return this.word;
             }
-            public void setTrustProcent(float value)
+            public void setConfidenceProcentRate(float confidenceRate)
             {
-                this.trustProcent = value;
+                this.confidenceRate = confidenceRate;
             }
-            public float getTrustProcent()
+            public float getConfidenceProcentRate()
             {
-                return this.trustProcent;
+                return this.confidenceRate;
             }
         }
 
@@ -338,7 +342,7 @@ namespace NaturalLanguageProcessing
                         if(subitem.getDataModelLabelID() != labelID && item.getDataModelString() == subitem.getDataModelString())
                             count++;
                     procent /= (float)count;
-                    item.setTrustProcent(procent);
+                    item.setConfidenceProcentRate(procent);
                 }
 
             }
@@ -349,7 +353,7 @@ namespace NaturalLanguageProcessing
                 var maxValCount = countValues().Values.Max();
                 var minValCount = countValues().Values.Min();
                 var countVals = countValues().Values.Count();
-                float factor = (float)((maxValCount / countVals) * (minValCount / countVals)) / (float)(countVals * dmList.Count) * 0.50f;
+                float factor = ((float)(maxValCount / countVals) * (float)(minValCount / countVals)) / (float)(countVals * dmList.Count) * 0.50f;
                 removingThresholdValue = (int)factor;
             }
 
@@ -374,8 +378,10 @@ namespace NaturalLanguageProcessing
                 predictorValues = new Dictionary<int, float>();
                 probabilities = new Dictionary<int, float>();
             }
-            public void simplisticPrediction(List<DataModel> trainedModel, List<string> words, int start_label)
+
+            public void makePrediction(List<DataModel> trainedModel, List<string> words, int start_label)
             {
+                // simplistic method
                 int labelID = start_label;
                 float prob = 0.0f;
                 foreach (var item in trainedModel)
@@ -387,16 +393,22 @@ namespace NaturalLanguageProcessing
                         prob = 0.0f;
                     }
                     if (item.getDataModelLabelID() == labelID && words.Contains(item.getDataModelString()))
-                        prob += ((float)item.getDataModelTagInfo() * item.getTrustProcent() );
+                        prob += ((float)item.getDataModelTagInfo() * item.getConfidenceProcentRate() );
                     if (trainedModel.Last().Equals(item))
                         predictorValues.Add(labelID, prob);
                 }
 
-                float sum = predictorValues.Values.Sum();
+                calculateProbabilities();                
+            }
 
+            private void calculateProbabilities()
+            {
+                // simplistic probability calculation.
+                float sum = predictorValues.Values.Sum();
                 foreach (var item in predictorValues)
                     probabilities.Add(item.Key, (item.Value / sum));
             }
+
             public KeyValuePair<int, float> argmax()
             {
                 var max = this.probabilities.OrderByDescending(x => x.Value).First();

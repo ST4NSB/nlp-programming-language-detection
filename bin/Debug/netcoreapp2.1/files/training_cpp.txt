@@ -1,1531 +1,1552 @@
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
+// training source: https://www.programiz.com/cpp-programming
 
-class Cpu {
-  public:
-    virtual int dummy( int, int ) {}
-  private:
-    virtual int add_( int a, int b ) { return a + b; }  /* A */
-    virtual int sub_( int a, int b ) { return a - b; }  /* B */
-    virtual int mul_( int a, int b ) { return a * b; }  /* C */
-    virtual int div_( int a, int b ) { return a / b; }  /* D */
-    virtual int mod_( int a, int b ) { return a % b; }  /* E */
-    virtual int and_( int a, int b ) { return a & b; }  /* F */
-    virtual int or_( int a, int b )  { return a | b; }  /* G */
-    virtual int xor_( int a, int b ) { return a ^ b; }  /* H */
-};
-
-int main( int argc, char* argv[] ) {
-    typedef int (Cpu::*Memfun)( int, int );
-
-    union {
-        Memfun fn;
-        unsigned char ptr[6];
-    } u;
-
-    Cpu    cpu;
-
-    u.fn = &Cpu::dummy;
-
-    assert( argc == 4 );
-
-    int p1 = atoi( argv[ 1 ] );
-    int p2 = atoi( argv[ 3 ] );
-    char op = argv[2][0];
-
-    assert( op >= 'A' && op <= 'H' );
-
-    u.ptr[0] = 1 + 4 * ( op - 'A' + 1 );  // Don't look here!
-
-    std::cout << "The answer is " << ( (cpu.*(u.fn))( p1, p2 ) ) << std::endl;
-}
 #include <iostream>
 using namespace std;
-int checkPrimeNumber(int);
-int main()
+int main() 
 {
-    int n1, n2;
-    bool flag;
-    cout << "Enter two positive integers: ";
-    cin >> n1 >> n2;
-    cout << "Prime numbers between " << n1 << " and " << n2 << " are: ";
-    for(int i = n1+1; i < n2; ++i)
+    int number;
+    cout << "Enter an integer: ";
+    cin >> number;
+    // checks if the number is positive
+    if ( number > 0) 
     {
-        // If i is a prime number, flag will be equal to 1
-        flag = checkPrimeNumber(i);
-        if(flag)
-            cout << i << " ";
+        cout << "You entered a positive integer: " << number << endl;
     }
+    cout << "This statement is always executed.";
     return 0;
 }
-// user-defined function to check prime number
-int checkPrimeNumber(int n)
+
+#include <iostream>
+using namespace std;
+int main() 
 {
-    bool flag = true;
-    for(int j = 2; j <= n/2; ++j)
+    int number;
+    cout << "Enter an integer: ";
+    cin >> number;
+    if ( number >= 0)
     {
-        if (n%j == 0)
+        cout << "You entered a positive integer: " << number << endl;
+    }
+    
+    else
+    {
+        cout << "You entered a negative integer: " << number << endl;
+    }
+    cout << "This line is always printed.";
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int number;
+    cout << "Enter an integer: ";
+    cin >> number;
+    if ( number > 0)
+    {
+        cout << "You entered a positive integer: " << number << endl;
+    }
+    else if (number < 0)
+    {
+        cout<<"You entered a negative integer: " << number << endl;
+    }
+    else
+    {
+        cout << "You entered 0." << endl;
+    }
+    cout << "This line is always printed.";
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int i, n, factorial = 1;
+    cout << "Enter a positive integer: ";
+    cin >> n;
+    for (i = 1; i <= n; ++i) {
+        factorial *= i;   // factorial = factorial * i;
+    }
+    cout<< "Factorial of "<<n<<" = "<<factorial;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int n, factorial = 1;
+    cout << "Enter a positive integer: ";
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        factorial *= i;   // factorial = factorial * i;
+    }
+    cout<< "Factorial of "<<n<<" = "<<factorial;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int number, i = 1, factorial = 1;
+    cout << "Enter a positive integer: ";
+    cin >> number;
+    
+    while ( i <= number) {
+        factorial *= i;      //factorial = factorial * i;
+        ++i;
+    }
+    cout<<"Factorial of "<< number <<" = "<< factorial;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    float number, sum = 0.0;
+    
+    do {
+        cout<<"Enter a number: ";
+        cin>>number;
+        sum += number;
+    }
+    while(number != 0.0);
+    cout<<"Total sum = "<<sum;
+    
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() {
+    float number, sum = 0.0;
+    // test expression is always true
+    while (true)
+    {
+        cout << "Enter a number: ";
+        cin >> number;
+        
+        if (number != 0.0)
         {
-            flag = false;
+            sum += number;
+        }
+        else
+        {
+            // terminates the loop if number equals 0.0
             break;
         }
     }
-    return flag;
-}
-#include <iostream>
-int main() 
-{
-    std::cout << "Hello, World!";
+    cout << "Sum = " << sum;
     return 0;
 }
-#include <iostream>
-using namespace std;
-int main() 
-{
-    cout << "Hello, World!";
-    return 0;
-}
-// calculates cost of one ounce of pure alcohol given volume, price, and proof.
-// special calculations for beer and if converting from mL to Oz.
 
 #include <iostream>
 using namespace std;
-
-
-// function prototypes
-void myname();                                  // author info
-int beerORliqour(int);                          // asks if beer or hard a
-float mlTOoz(float, int);                       // converts mL to Oz
-float containerVolume(float, int, int);         // calculate volume
-int beer(int);                                  // calculate total case volume if beer
-void conclusion(float, float, float, int, int); // outputs calculations
-
 int main()
 {
-        char convertyn;                 // convert ml to oz? (y or n)
-        float volume;                   // volume of container(s)
-        int yn;                         // beer yes or no (1 or 2)
-        int beercase;                   // number of beers in a case
-        float proof, price;             // user inputs
-        float content, worth;           // calculations
-
-        beercase = 0;                   // set beercase and volume to 0, had
-        volume = 0;                     // to do this to get program to work
-
-
-        myname();
-
-        yn = beerORliqour(yn);          // declare yn for use in other fucntions
-        if (yn == 1)                    // only do if calculating for beer
-        {
-        cout << "Enter the number of beers in a case: ";
-        cin >> beercase;                // input # beers in a case
-        cout << endl;
-        }
-
-
-        volume = mlTOoz(volume, yn);    // run function to convert mL to Oz, if wanted.
-                                        // if wanted, output volume. if not, volume
-                                        // remains '0'.
-
-        if (volume == 0)                // only run if volume has not been entered yet
-        volume = containerVolume(volume, yn, beercase);
-                                        // run function to figure out volume.
-
-
-        cout << "Enter the proof (2x the listed alcohol content by %volume): ";
-        cin >> proof;                   // user input proof
-        cout << endl;
-
-        cout << "Enter the price: $";
-        cin >> price;                   // user input price
-        cout << endl;
-
-
-        conclusion(volume, proof, price, yn, beercase); // conclusion
-
-
-        return 0;
-}
-
-int beerORliqour(int answer)
-{
-        cout << "Enter 1 for beer. Enter 2 for everything else. ";
-        cin >> answer;          // input 1 for beer, 2 for anything else
-        cout << endl;
-
-        return(answer);         // returns user input to main. is called "yn" in main function
-}
-float mlTOoz(float v, int beeryn)
-{
-        char convertyn;                 // need help converting, y or n;
-        float mL;                       // user input milliliters
-
-        cout << "Volume input must be in ounces. Do you ";
-        cout << "need help converting from milliliters ";
-        cout << "to Oz? (Y or N) ";
-        cin >> convertyn;
-        cout << endl;
-
-        switch (convertyn)
-        {
-                case 'Y': case 'y':
-                        if (beeryn == 1)
-                        cout << "Enter the volume of one can of beer: ";
-                        else if (beeryn == 2)
-                        cout << "Enter the volume: ";
-
-                        cin >> mL;
-                        cout << endl;
-                        
-                        v = mL * 0.0338140226;
-                        cout << mL << " milliliters is equal to " << v << " ounces." << endl;
-                break;
-                case 'N': case 'n':
-                v = 0;                  // if no need to convert mL to Oz, volume remains
-                                        // '0' for now. Will be changed with next function
-        }
-
-
-
-        return(v);                      // return v to main. is called "volume" in main function"
-}
-float containerVolume(float v, int beeryn, int beerc)
-{
-        float oz;                       // local float used for calculating volume
-        if (beeryn == 1)                // run if beer
-        {
-        cout << "Enter the volume of one can of beer: ";
-        cin >> oz;
-        cout << endl;
-        v = oz * beerc;                 // Oz must be multiplied by # cans in case to get total volume
-        }
-        else if (beeryn == 2)           // run if other
-        {
-        cout << "Enter the volume in ounces: ";
-        cin >> v;
-        cout << endl;
-        }
-
-        return(v);
-}
-void conclusion(float v, float prf, float prc, int beeryn, int cb)
-{
-        float costcan;                  // cost of one can of beer
-        float contcan;                  // alcohol content of one can of beer
-        float c;                        // content
-        float w;                        // worth
-
-        c = ((v) * ((prf) / 200));      // content = volume * (proof / 200)
-                                        // units of Oz pure alcohol content
-        w = ((prc) / (c));              // worth = price / content
-                                        // units of $ per ounce of pure alcohol
-
-        costcan = ((prc) / (cb));       // cost per can = price / # beers in case
-        contcan = ((v) / (cb)) * ((prf) / 200); // contents of can = (volume / # beers in case) * (proof /200)
-
-        cout << "beeryn is " << beeryn << endl;
-
-        if (beeryn == 1)
-        {
-                cout << "There are " << c << " total ounces of pure alcohol present, ";
-                cout << "which you are paying for at a rate of $" << w;
-                cout << " per ounce of pure alcohol." << endl;
-                cout << "Each can costs approximately $" << costcan << endl;
-                cout << "Each can contains approximately " << contcan;
-                cout << " ounces of pure alcohol" << endl;
-        }
-        if (beeryn == 2)
-        {
-                cout << "There are " << c << " total ounces of pure alcohol present, ";
-                cout << "which you are paying for at a rate of $" << w;
-                cout << " per ounce of pure alcohol." << endl;
-                if (w < 1)
-                cout << "WOW!!! That's cheap!" << endl;         // nested if statement
-        }
-}
-void myname()
-{
-        cout << endl << endl << endl;
-        cout << "***********************************************************" << endl;
-        cout << "* This program calculates how much you are paying for an  *" << endl;
-        cout << "* ounce of pure alcohol when you buy booze. This can be   *" << endl;
-        cout << "* used as an effective way of comparing the value of one  *" << endl;
-        cout << "* spirit versus another. Have fun and drink responsibly!  *" << endl;
-        cout << "***********************************************************" << endl;
-        cout << endl;
-        cout << "          **************************************" << endl;
-        cout << "          *              Created by            *" << endl;
-        cout << "          *           Samuel xxxxxxxxx         *" << endl;
-        cout << "          *   xxxxxxxxxxxx@xxxxxxxxxxxxxx.edu  *" << endl;
-        cout << "          **************************************" << endl;
-        cout << endl << endl << endl;
-
-        return;
-}
-#include <iostream>
-using namespace std;
-     
-void Store(){
-     
-     cout << "The Item store is not finished yet\n" << endl;
-     
-     int Mainmenu();
-     Mainmenu();
-     
-     }
-     
-void Character(){
-     
-     int PlayerHp, PlayerStr, PlayerMana;
-     
-     cout << "Your character has:\n\n";
-               
-     cout << PlayerHp << " Health" << endl;
-     cout << PlayerStr << " Strength" << endl;
-     cout << PlayerMana << " Mana" << endl;
-     
-     cout << endl;
-     
-     int Mainmenu();
-     Mainmenu();
-     }
-     
-void Inventory(){
-     
-     cout << "Your inventory contains:\n" << endl;
-     
-     int Mainmenu();
-     Mainmenu();
-
-     }
-     
-void Wilderness(){
-     
-     cout << "You search the Jungle and find:\n" << endl;
-     
-     string Creatures[10];
-     
-     Creatures[0] = "1";
-     Creatures[1] = "2";
-     Creatures[2] = "3";
-     Creatures[3] = "4";
-     
-     cout << Creatures << " Is really dangerous " << endl;
-     
-     int Mainmenu();
-     Mainmenu();
-     }
-
-void Mainmenu(){
-     
-     string choice;
-     
-     cout << "1: Attack creature" << endl;
-     cout << "2: Buy equipment" << endl;
-     cout << "3: Inventory" << endl;
-     cout << "4: Stats" << endl;
-          
-          // invalid option returns to this
-          InvalidOption:
-                      
-     cin >> choice;
-     if (choice == "1"){
-                Wilderness ();
-                }
-     else if (choice == "2"){
-                     Store();
-                     }
-     else if (choice == "3"){
-                     Inventory();
-                     }
-     else if (choice == "4"){
-                     Character();
-                     }
-     else{
-          cout << "You have not chosen a valid option" << endl;
-          goto InvalidOption;
-     }
-                     
-
-     
-     }
-
-int main()
-{
-    int PlayerHp = 100, PlayerStr = 20, PlayerMana = 50;
-    Mainmenu ();
-}
-void character(int h ){ //parameter can be any name including health
-
-cout << "Your health is: " << h;
-
-}
-
-
-int main(){
-
-int health = 100, strength = 20, Mana = 50;
-character(health);
-
-}
-// Program to check if a given directed graph is strongly connected or not
-#include <iostream>
-#include <list>
-#include <stack>
-using namespace std;
- 
-class Graph
-{
-        int V; // No. of vertices
-        list<int> *adj; // An array of adjacency lists
- 
-        // A recursive function to print DFS starting from v
-        void DFSUtil(int v, bool visited[]);
-    public:
-        // Constructor and Destructor
-        Graph(int V)
-        {
-            this->V = V;
-            adj = new list<int> [V];
-        }
-        ~Graph()
-        {
-            delete[] adj;
-        }
- 
-        // Method to add an edge
-        void addEdge(int v, int w);
- 
-        // The main function that returns true if the graph is strongly
-        // connected, otherwise false
-        bool isSC();
- 
-        // Function that returns reverse (or transpose) of this graph
-        Graph getTranspose();
-};
- 
-// A recursive function to print DFS starting from v
-void Graph::DFSUtil(int v, bool visited[])
-{
-    // Mark the current node as visited and print it
-    visited[v] = true;
- 
-    // Recur for all the vertices adjacent to this vertex
-    list<int>::iterator i;
-    for (i = adj[v].begin(); i != adj[v].end(); ++i)
-        if (!visited[*i])
-            DFSUtil(*i, visited);
-}
- 
-// Function that returns reverse (or transpose) of this graph
-Graph Graph::getTranspose()
-{
-    Graph g(V);
-    for (int v = 0; v < V; v++)
+    for (int i = 1; i <= 10; ++i)
     {
-        // Recur for all the vertices adjacent to this vertex
-        list<int>::iterator i;
-        for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if ( i == 6 || i == 9)
         {
-            g.adj[*i].push_back(v);
+            continue;
+        }
+        cout << i << "\t";
+    }
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    char o;
+    float num1, num2;
+    cout << "Enter an operator (+, -, *, /): ";
+    cin >> o;
+    cout << "Enter two operands: ";
+    cin >> num1 >> num2;
+    
+    switch (o) 
+    {
+        case '+':
+            cout << num1 << " + " << num2 << " = " << num1+num2;
+            break;
+        case '-':
+            cout << num1 << " - " << num2 << " = " << num1-num2;
+            break;
+        case '*':
+            cout << num1 << " * " << num2 << " = " << num1*num2;
+            break;
+        case '/':
+            cout << num1 << " / " << num2 << " = " << num1/num2;
+            break;
+        default:
+            // operator is doesn't match any case constant (+, -, *, /)
+            cout << "Error! operator is not correct";
+            break;
+    }
+    
+    return 0;
+}
+
+# include <iostream>
+using namespace std;
+int main()
+{
+    float num, average, sum = 0.0;
+    int i, n;
+    cout << "Maximum number of inputs: ";
+    cin >> n;
+    for(i = 1; i <= n; ++i)
+    {
+        cout << "Enter n" << i << ": ";
+        cin >> num;
+        
+        if(num < 0.0)
+        {
+           // Control of the program move to jump:
+            goto jump;
+        } 
+        sum += num;
+    }
+    
+jump:
+    average = sum / (i - 1);
+    cout << "\nAverage = " << average;
+    return 0;
+}
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    double number, squareRoot;
+    cout << "Enter a number: ";
+    cin >> number;
+    // sqrt() is a library function to calculate square root
+    squareRoot = sqrt(number);
+    cout << "Square root of " << number << " = " << squareRoot;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+// Function prototype (declaration)
+int add(int, int);
+int main()
+{
+    int num1, num2, sum;
+    cout<<"Enters two numbers to add: ";
+    cin >> num1 >> num2;
+    // Function call
+    sum = add(num1, num2);
+    cout << "Sum = " << sum;
+    return 0;
+}
+// Function definition
+int add(int a, int b)
+{
+    int add;
+    add = a + b;
+    // Return statement
+    return add;
+}
+
+# include <iostream>
+using namespace std;
+void prime();
+int main()
+{
+    // No argument is passed to prime()
+    prime();
+    return 0;
+}
+// Return type of function is void because value is not returned.
+void prime()
+{
+    int num, i, flag = 0;
+    cout << "Enter a positive integer enter to check: ";
+    cin >> num;
+    for(i = 2; i <= num/2; ++i)
+    {
+        if(num % i == 0)
+        {
+            flag = 1; 
+            break;
         }
     }
-    return g;
-}
- 
-void Graph::addEdge(int v, int w)
-{
-    adj[v].push_back(w); // Add w to v’s list.
-}
- 
-// The main function that returns true if graph is strongly connected
-bool Graph::isSC()
-{
-    // St1p 1: Mark all the vertices as not visited (For first DFS)
-    bool visited[V];
-    for (int i = 0; i < V; i++)
-        visited[i] = false;
- 
-    // Step 2: Do DFS traversal starting from first vertex.
-    DFSUtil(0, visited);
- 
-    // If DFS traversal doesn’t visit all vertices, then return false.
-    for (int i = 0; i < V; i++)
-        if (visited[i] == false)
-            return false;
- 
-    // Step 3: Create a reversed graph
-    Graph gr = getTranspose();
- 
-    // Step 4: Mark all the vertices as not visited (For second DFS)
-    for (int i = 0; i < V; i++)
-        visited[i] = false;
- 
-    // Step 5: Do DFS for reversed graph starting from first vertex.
-    // Staring Vertex must be same starting point of first DFS
-    gr.DFSUtil(0, visited);
- 
-    // If all vertices are not visited in second DFS, then
-    // return false
-    for (int i = 0; i < V; i++)
-        if (visited[i] == false)
-            return false;
- 
-    return true;
-}
- 
-// Driver program to test above functions
-int main()
-{
-    // Create graphs given in the above diagrams
-    Graph g1(5);
-    g1.addEdge(0, 1);
-    g1.addEdge(1, 2);
-    g1.addEdge(2, 3);
-    g1.addEdge(3, 0);
-    g1.addEdge(2, 4);
-    g1.addEdge(4, 2);
-    cout << "The graph is weakly connected? ";
-    g1.isSC() ? cout << "No\n" : cout << "Yes\n";
- 
-    Graph g2(4);
-    g2.addEdge(0, 1);
-    g2.addEdge(1, 2);
-    g2.addEdge(2, 3);
-    cout << "The graph is weakly connected? ";
-    g2.isSC() ? cout << "No\n" : cout << "Yes\n";
- 
-    return 0;
-}
-#include<stdio.h>
-#include<iostream>
-#include<conio.h>
-using namespace std;
-int c = 0;
-struct adj_list
-{
-        int dest;
-        adj_list *next;
-}*np = NULL, *np1 = NULL, *p = NULL, *q = NULL;
-struct Graph
-{
-        int v;
-        adj_list *ptr;
-} array[6];
-void addReverseEdge(int src, int dest)
-{
-    np1 = new adj_list;
-    np1->dest = src;
-    np1->next = NULL;
-    if (array[dest].ptr == NULL)
+    if (flag == 1)
     {
-        array[dest].ptr = np1;
-        q = array[dest].ptr;
-        q->next = NULL;
+        cout << num << " is not a prime number.";
     }
     else
     {
-        q = array[dest].ptr;
-        while (q->next != NULL)
-        {
-            q = q->next;
-        }
-        q->next = np1;
+        cout << num << " is a prime number.";
     }
 }
-void addEdge(int src, int dest)
+
+#include <iostream>
+using namespace std;
+int prime();
+int main()
 {
-    np = new adj_list;
-    np->dest = dest;
-    np->next = NULL;
-    if (array[src].ptr == NULL)
+    int num, i, flag = 0;
+    // No argument is passed to prime()
+    num = prime();
+    for (i = 2; i <= num/2; ++i)
     {
-        array[src].ptr = np;
-        p = array[src].ptr;
-        p->next = NULL;
+        if (num%i == 0)
+        {
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 1)
+    {
+        cout<<num<<" is not a prime number.";
     }
     else
     {
-        p = array[src].ptr;
-        while (p->next != NULL)
-        {
-            p = p->next;
-        }
-        p->next = np;
+        cout<<num<<" is a prime number.";
     }
-    //addReverseEdge(src, dest);
-}
-void print_graph(int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Adjacency List of " << array[i].v << ": ";
-        while (array[i].ptr != NULL)
-        {
-            cout << (array[i].ptr)->dest << " ";
-            array[i].ptr = (array[i].ptr)->next;
-        }
-        cout << endl;
-    }
-}
- 
-int checkDAG(int n)
-{
-    int count = 0;
-    int size = n - 1;
-    for (int i = 0; i < n; i++)
-    {
-        if (count == size)
-        {
-            return 0;
-        }
-        if (array[i].ptr == NULL)
-        {
-            count++;
-            for (int j = 0; j < n; j++)
-            {
- 
-                while (array[j].ptr != NULL)
-                {
-                    if ((array[j].ptr)->dest == (array[i].ptr)->dest)
-                    {
-                        (array[j].ptr)->dest = -1;
-                    }
-                    array[i].ptr = (array[i].ptr)->next;
-                }
-            }
- 
-        }
-    }
-    cout<<"after checking dag";    int visited[n + 1];
-    for (int i = 0; i < n; i++)
-    {
-        while (array[i].ptr != NULL)
-        {
-            cout << (array[i].ptr)->dest << " ";
-            visited[i] = 1;
-            for (int j = 0; j < n; j++)
-            {
- 
-                while (array[j].ptr != NULL)
-                {
-                    cout << (array[j].ptr)->dest << " ";
-                    if (visited[array[j].v] == 1)
-                    {
-                        cout << array[i].v << " - " << array[j].v;
-                    }
-                    array[j].ptr = (array[j].ptr)->next;
-                }
-                cout << endl;
-            }
- 
-            array[i].ptr = (array[i].ptr)->next;
-        }
-        cout << endl;
-    }
-    return 1;
-}
-int main()
-{
-    int n = 6;
-    cout << "Number of vertices: " << n << endl;
- 
-    for (int i = 0; i < n; i++)
-    {
-        array[i].v = i;
-        array[i].ptr = NULL;
-    }
-    addEdge(0, 1);
-    addEdge(1, 2);
-    addEdge(1, 3);
-    addEdge(3, 4);
-    addEdge(4, 5);
-    addEdge(3, 5);
-    addEdge(5, 2);
-    print_graph(n);
-    cout << "Feedback arc Set: ";
-    if (checkDAG(n) == 0)
-        cout << " None";
-}
-// A C++ program for Dijkstra's single source shortest path algorithm.
-// The program is for adjacency matrix representation of the graph
- 
-#include <stdio.h>
-#include <limits.h>
- 
-// Number of vertices in the graph
-#define V 9
- 
-// A utility function to find the vertex with minimum distance value, from
-// the set of vertices not yet included in shortest path tree
-int minDistance(int dist[], bool sptSet[])
-{
-    // Initialize min value
-    int min = INT_MAX, min_index;
- 
-    for (int v = 0; v < V; v++)
-        if (sptSet[v] == false && dist[v] <= min)
-            min = dist[v], min_index = v;
- 
-    return min_index;
-}
- 
-// A utility function to print the constructed distance array
-int printSolution(int dist[], int n)
-{
-    printf("Vertex   Distance from Source\n");
-    for (int i = 0; i < V; i++)
-        printf("%d \t\t %d\n", i, dist[i]);
-}
- 
-// Funtion that implements Dijkstra's single source shortest path algorithm
-// for a graph represented using adjacency matrix representation
-void dijkstra(int graph[V][V], int src)
-{
-    int dist[V]; // The output array.  dist[i] will hold the shortest
-    // distance from src to i
- 
-    bool sptSet[V]; // sptSet[i] will true if vertex i is included in shortest
-    // path tree or shortest distance from src to i is finalized
- 
-    // Initialize all distances as INFINITE and stpSet[] as false
-    for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX, sptSet[i] = false;
- 
-    // Distance of source vertex from itself is always 0
-    dist[src] = 0;
- 
-    // Find shortest path for all vertices
-    for (int count = 0; count < V - 1; count++)
-    {
-        // Pick the minimum distance vertex from the set of vertices not
-        // yet processed. u is always equal to src in first iteration.
-        int u = minDistance(dist, sptSet);
- 
-        // Mark the picked vertex as processed
-        sptSet[u] = true;
- 
-        // Update dist value of the adjacent vertices of the picked vertex.
-        for (int v = 0; v < V; v++)
- 
-            // Update dist[v] only if is not in sptSet, there is an edge from
-            // u to v, and total weight of path from src to  v through u is
-            // smaller than current value of dist[v]
-            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u]
-                    + graph[u][v] < dist[v])
-                dist[v] = dist[u] + graph[u][v];
-    }
- 
-    // print the constructed distance array
-    printSolution(dist, V);
-}
- 
-// driver program to test above function
-int main()
-{
-    /* Let us create the example graph discussed above */
-    int graph[V][V] =
-            { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, { 4, 0, 8, 0, 0, 0, 0, 11, 0 }, {
-                    0, 8, 0, 7, 0, 4, 0, 0, 2 },
-                    { 0, 0, 7, 0, 9, 14, 0, 0, 0 }, { 0, 0, 0, 9, 0, 10, 0, 0,
-                            0 }, { 0, 0, 4, 0, 10, 0, 2, 0, 0 }, { 0, 0, 0, 14,
-                            0, 2, 0, 1, 6 }, { 8, 11, 0, 0, 0, 0, 1, 0, 7 }, {
-                            0, 0, 2, 0, 0, 0, 6, 7, 0 } };
- 
-    dijkstra(graph, 0);
- 
     return 0;
 }
-#include<iostream>
-#include<time.h>
-#include<stdlib.h>
-#define MAX_NUM 10
-using namespace std;
-void randnum()
+// Return type of function is int
+int prime()
 {
-  int random;
-  srand(time(NULL));
-  for(int i=0;i<10;i++)
-  {
-    random=rand()%MAX_NUM;
-    cout<<random<<endl;
-  }
-}
-int main()
-{
-  cout<<"The ten random number are "<<endl;
-  randnum();
-  return 0;
+    int n;
+    printf("Enter a positive integer to check: ");
+    cin >> n;
+    return n;
 }
 
-#include<iostream>
+#include <iostream>
 using namespace std;
- 
-int main() {
-int number, reverse = 0;
-cout<<"Enter a Number to Reverse and press Enter: ";
-cin>> number;     // Taking Input Number in variable number
- 
-   for( ; number!= 0 ; )
-   {
-      reverse = reverse * 10;
-      reverse = reverse + number%10;
-      number = number/10;
-   }
-   cout<<"Reversed Number is:  "<< reverse;
-   return 0;
- 
-}
-/**
-C++ - Program with Matrices by codebind.com
-*/
- 
-#include<iostream>
-#include<cmath>
- 
-using namespace std;
- 
- 
-void swapcol(int a[50][50], int r, int c, int b);
-void swaprow(int a[50][50], int r, int c,int b);
-int swapmx(int arr[50][50],int m,int n,int a ,int b );
-void arrey(int arr1[50][50],int arr2[50][50], int sizemx1, int p,int q);
- 
- 
- 
+void prime(int n);
 int main()
 {
-  //-------defining variables and initializing them-------------
-  int e,flag=0,i,j,flag1=0;
-  int arrey1[50][50],arrey2[50][50],arrey3[50][50],arrey4[50][50],arrey5[50][50],arrey6[50][50],arrey7[50][50],arrey8[50][50];
-  int k,sizemx1,p,q,r,x,y,temp=0;
-  int m, n,a,b,l;
-  char operation,redo;
-  //--------Printing my name on screen----------------
-  cout<<"Welcome to the  program 2.1 written by Your Name"<<endl;
-  cout<<"***************************************************************"<<endl;
-  cout<<endl<<endl<<endl;
- 
-  cout<<"The instruction menu:"<<endl<<endl<<endl;
-  cout<<"    1. Initialize Matrices"<<endl;
-  cout<<"    2. Print Matrices"<<endl;
-  cout<<"    3. Multiply Matrices"<<endl;
-  cout<<"    4. Transpose of 2nd Matrix"<<endl;
-  cout<<"    5. Move Row and Column of 2nd Matrix"<<endl;
-  cout<<"    6. Quit"<<endl<<endl;
- 
-  //--here do loop is used so that the program can be used more then one time
-  //without exiting the run screen---------------------------
-  do
-  {
-    do
+    int num;
+    cout << "Enter a positive integer to check: ";
+    cin >> num;
+    
+    // Argument num is passed to the function prime()
+    prime(num);
+    return 0;
+}
+// There is no return value to calling function. Hence, return type of function is void. */
+void prime(int n)
+{
+    int i, flag = 0;
+    for (i = 2; i <= n/2; ++i)
     {
- 
- 
-      cout<<"Please enter your requested instruction (1..6)?=  ";
-      while(!(cin>>operation))  //Reciving vaiables from input : is it no/character ?
-      {
-        cout << "Please  enter a number!  Try again: ";
-        cin.clear ();
-        cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-        // whichever comes first.
-      }
-      //cin>>operation ;
-      cout<<endl;
- 
- 
- 
- 
-      //---used switch function so thet the operater can be decided------------
-      switch (operation)
-      {
-      //------calculating the requested equation for inputs-------------
-      //-------at the same time printing the results on screen-----------
-      case'1':
-        cout<<"Enter the Size of 1st square Matrix"<<endl;
-        cout<<"Row & Column=";
-        while(!(cin>>sizemx1))  //Reciving vaiables from input : is it no/character ?
+        if (n%i == 0)
         {
-          cout << "Please  enter a number!  Try again: ";
-          cin.clear ();
-          cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-          // whichever comes first.
+            flag = 1;
+            break;
         }
-        //cin>>sizemx1;
-        if (sizeof(sizemx1)<4){
-          cout<<"unknown command"<<endl;
-        }
-        cout<<"Enter the  of 2nd Matrix"<<endl;
-        cout<<"Row=";
-        while(!(cin>>p))  //Reciving vaiables from input : is it no/character ?
-        {
-          cout << "Please  enter a number!  Try again: ";
-          cin.clear ();
-          cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-          // whichever comes first.
-        }
- 
-        //cin>>p;
- 
-        cout<<"Column=";
-        while(!(cin>>q))  //Reciving vaiables from input : is it no/character ?
-        {
-          cout << "Please  enter a number!  Try again: ";
-          cin.clear ();
-          cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-          // whichever comes first.
-        }
-        //cin>>q;
-        flag=flag+1;
-        //cout<<"flag="<<flag<<endl;
- 
- 
-        break;
-      case'2': //2. Print Matrices
-        //cout<<"flag="<<flag<<endl;
-        //cout<<"flag1="<<flag1<<endl;
- 
-        if(flag<1){
-          cout<<"flag="<<flag<<endl;
-          cout<<"Please perforform operation no.1 firest"<<endl;
-        }
-        if(flag>=1){
-          cout<<"flag="<<flag<<endl;
-          // arrey( arrey1,arrey2, sizemx1, p,q);
-          /*cout<<"Enter the elements in the 1st Array"<<endl;
-for(i=0;i<sizemx1;i++)
-{
-for(j=0;j<sizemx1;j++)
-{
-cin>>arrey1[i][j];
-}
-}
-cout<<"Enter the elements in the 2nd Array"<<endl;
-for(i=0;i<p;i++)
-{
-for(j=0;j<q;j++)
-{
-cin>>arrey2[i][j];
-}
-}*/
- 
- 
- 
- 
-          cout<<"\nDisplaying the 1st Array"<<endl;
-          for(i=0;i<sizemx1;i++)
-          {
-            for(j=0;j<sizemx1;j++)
-            {
-              arrey1[i][j] = 50+rand() %(100-50+1);
- 
-              cout<<arrey1[i][j]<<"\t";
- 
-            }
-            cout<<endl;
-          }
-          cout<<"\nDisplaying the 2nd Array"<<endl;
-          for(i=0;i<p;i++)
-          {
-            for(j=0;j<q;j++)
-            {
-              arrey2[i][j] = 50+rand() %(100-50+1);
- 
-              cout<<arrey2[i][j]<<"\t";
-            }
-            cout<<endl;
-          }
-          flag1=flag1+1;
-        }
-        arrey2[10][10]=arrey4[10][10];
- 
-        for(i=0;i<p;i++)
-        {
-          for(j=0;j<q;j++)
-          {
-            arrey5[i][j]=arrey2[i][j];
-            arrey6[i][j]=arrey2[i][j];
-          }
-        }
- 
-        break;
-      case'3':      //3. Multiply Matrices
-        //cout<<"flag1="<<flag1<<endl;
-        if(flag1<1){
-          cout<<"Please perforform operation no.1 and no.2 firest"<<endl;
-        }else{
-          if(sizemx1!=p){
-            cout<<"Multiplication is not possible"<<endl;
-          }
-          if(sizemx1==p)
-          {
-            for(i=0;i<sizemx1;i++)
-            {
-              for(j=0;j<q;j++)
-              {
-                arrey3[i][j]=0;
-                for(k=0;k<p;k++)
-                {
-                  arrey3[i][j]=arrey3[i][j]+arrey1[i][k]*arrey2[k][j];
-                }
-              }
-            }
-            cout<<"\nDisplaying the array elements after multiplication"<<endl;
-            for(i=0;i<sizemx1;i++)
-            {
-              for(j=0;j<q;j++)
-              {
-                cout<<arrey3[i][j]<<"\t";
-              }
-              cout<<endl;
-            }
-          }
-        }
-        break;
-      case'4':   //4. Transpose of 2nd Matrix
- 
-        if(flag1<1){
-          cout<<"Please perforform operation no.1 and no.2 firest"<<endl;
-        }
-        else{
-          for(i=0;i<p;i++)
-          {
-            for(j=0;j<q;j++)
-            {
-              arrey7[i][j]=arrey6[i][j];
- 
-            }
-          }
-          cout<<"\nDisplaying trannspose the 2nd Matrix"<<endl;
- 
-          for(i=0;i<=q-1;i++)
-          {
-            for(j=0;j<=p-1;j++)
-            {
-              temp=arrey7[j][i];
-              arrey7[j][i]=arrey4[i][j];
-              arrey4[i][j]=temp;
- 
-              //cout<<i<<j;
-              cout<<temp<<"\t";
-            }
-            cout<<endl;
-          }
-        }
- 
-        break;
-      case'5': //5. Move Row and Column of 2nd Matrix
- 
-        if(flag1<1){
-          cout<<"Please perforform operation no.1 and no.2 firest"<<endl;
-        }    else{
- 
-          cout <<"enter the row number you want to swap:"<<endl;
-          // cin>>x>>y;
- 
-          while(!(cin>>x))  //Reciving vaiables from input : is it no/character ?
-          {
-            cout << "Please  enter a number!  Try again: ";
-            cin.clear ();
-            cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-            // whichever comes first.
-          }
-          cout<<endl;
-          cout <<"enter the column number you want to swap:"<<endl;
-          while(!(cin>>y))  //Reciving vaiables from input : is it no/character ?
-          {
-            cout << "Please  enter a number!  Try again: ";
-            cin.clear ();
-            cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-            // whichever comes first.
-          }
-          cout<<endl;
- 
-          for(i=0;i<p;i++)
-          {
-            for(j=0;j<q;j++)
-            {
-              arrey8[i][j]=arrey5[i][j];
- 
-            }
-          }
-          cout<<"The original matrix is"<<endl;
-          cout<< endl;
- 
-          for(i=0;i<p;i++)
-          {
-            for(j=0;j<q;j++)
-            {
- 
- 
-              cout<<arrey8[i][j]<<"\t";
-            }
-            cout<< endl;
-          }
- 
-          swapmx(arrey8,p,q,x,y);
-          cout<< endl;
- 
-        }
-        break;
-      case'6':  //  6. Quit
-        cout<<"Thanks do u want to start again:";
-        cout<<endl<<endl;
-        goto label;
-        break;
-      default:
-        cout<<"unknown command"<<endl;
- 
-      }
     }
-    while(operation=='1'||operation=='2'||operation=='3'||operation=='4'||operation=='5'||operation=='6');
- 
- 
-    //----now once again the program will ask the user if want to continue or not
-    cout<<"enter y or Y to continue:";
-    cin>>redo;
-    cout<<endl<<endl;
-  }
-  while(redo=='y'||redo=='Y');
-label:
- 
-  system("pause");
-  return 0;
- 
-}
-void arrey(int arr1[50][50],int arr2[50][50], int sizemx1, int p,int q)
-{
- 
-  cout<<"Enter the elements in the 1st Array"<<endl;
-  for(int i=0;i<sizemx1;i++)
-  {
-    for(int j=0;j<sizemx1;j++)
+    if (flag == 1)
     {
-      //cin>>arr1[i][j];
-      while(!(cin>>arr1[i][j]))  //Reciving vaiables from input : is it no/character ?
-      {
-        cout << "Please  enter a number!  Try again: ";
-        cin.clear ();
-        cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-        // whichever comes first.
-      }
- 
-    }
-  }
-  cout<<"Enter the elements in the 2nd Array"<<endl;
-  for(int i=0;i<p;i++)
-  {
-    for(int j=0;j<q;j++)
-    {
-      //cin>>arr2[i][j];
-      while(!(cin>>arr2[i][j]))  //Reciving vaiables from input : is it no/character ?
-      {
-        cout << "Please  enter a number!  Try again: ";
-        cin.clear ();
-        cin.ignore (1000, '\n');  // Skip to next newline or 1000 chars,
-        // whichever comes first.
-      }
-    }
-  }
-}
-void swapcol(int a[50][50], int r, int c,int b)
-// r -> row, c ->col
-{
-  int t,s;
-  while(b < (c-1))
-  {
-    for(int i=0; i<r; i++)
-    {
-      t = a[i][b];
-      a[i][b] = a[i][b+1];
-      a[i][b+1] = t;
-    }
-    b++;
-  }
- 
- 
-}
-void swaprow(int a[50][50], int r, int c,int b)
-// r -> row, c ->col
-{
-  int t;
-  while(b < (r-1))
-  {
-    for(int i=0; i<c; i++)
-    {
-      t = a[b][i];
-      a[b][i] = a[b+1][i];
-      a[b+1][i] = t;
-    }
-    b++;
-  }
- 
-  /*for(int i = 0; i< c ; i++)
-{
-t = a[b-1][i];
-a[b-1][i] = a[r-1][i];
-a[r-1][i] = t;
-}*/
-}
-int swapmx(int arr[50][50],int m,int n,int a ,int b )
-{
- 
-  int  i, j,k,l;
- 
-  //for( l = 0; l <=a-1; l ++){
-  /* Swap function call */
-  cout<<"The matrix after shifting row"<<endl;
-  swaprow(arr, m, n, a-1);
-  for( i = 0; i < m ; i ++)
-  { cout<< endl;
-    for (  j = 0; j < n ; j ++)
- 
-      cout << arr[i][j] <<"\t";
-  }
-  cout<< endl;
-  cout<< endl;
- 
- 
-  //}
-  cout<<endl<<endl;
-  cout<<"The matrix after shifting column"<<endl;
-  //for( k = 0; k <=b ; k ++){
- 
- 
-  swapcol(arr, m, n, b-1);
-  //cout<<"k="<<k<<endl;
-  /* Display Array in Matrix form */
-  //}
-  for( i = 0; i < m ; i ++)
-  { cout<< endl;
-    for (  j = 0; j < n ; j ++)
-      cout << arr[i][j] <<"\t";
-  }
-  cout<< endl;
-  return 1;
-}
-#include <stdio.h>
-#include <stdlib.h>
- 
- 
-int main () {
-  int r=0,a=0,n,b=1,i,c;
-  char redo;
-  do {
-    a=0;
-    b=1;
-    printf("enter the the value of n:");
-    scanf("%d", &n);
-    if(n>100) {
-      printf("enter some lessor value\n");
+        cout << n << " is not a prime number.";
     }
     else {
-      for (i=0;i<=n;i++) {
-        c=a+b;
-        a=b;
-        b=c;
-        printf("serial no.%d => ", i+1);
-        printf("%d\n",a);
-      }
-      printf("enter y or Y to continue:");
-      scanf("%s", &redo);
-      printf("\n");
+        cout << n << " is a prime number.";
     }
-  }
-  while(redo=='y'||redo=='Y');
- 
-  return 0;
 }
-#include <stdio.h>
-#include <stdlib.h>
- 
-int Fibonacci(int x) {
-  if (x < 2){
-    return x;
-  }
-  return (Fibonacci (x - 1) + Fibonacci (x - 2));
-}
- 
-int main(void) {
-  int number;
-  printf( "Please enter a positive integer: ");
-  scanf("%d", &number);
-  if (number < 0)
-    printf( "That is not a positive integer.\n");
-  else
-    printf("%d Fibonacci is: %d\n", number, Fibonacci(number));
-  return 0;
-}
-#include<stdio.h> 
-  
-int main() 
-{ 
-   unsigned int max; 
-   max = 0; 
-   max = ~max; 
-   printf("Max value : %u ",  max); 
-  return 0; 
-}  
-#include<iostream> 
-  
-using namespace std; 
-int main() 
-{ 
-  int a = 5; 
-  int b = 5; 
-  int sum = -( -a-b ); 
-  cout << sum; 
-  return 0; 
-} 
-#include<iostream> 
-  
-using namespace std; 
-int main() 
-{ 
-    if (!(cout << "geeks"))  
-    cout <<" geeks ";  
+
+#include <iostream>
+using namespace std;
+int prime(int n);
+int main()
+{
+    int num, flag = 0;
+    cout << "Enter positive integer to check: ";
+    cin >> num;
+    // Argument num is passed to check() function
+    flag = prime(num);
+    if(flag == 1)
+        cout << num << " is not a prime number.";
     else
-    cout << "forgeeks "; 
-      
-    return 0; 
-} 
-#include<iostream> 
-  
-using namespace std; 
-int main() 
-{ 
-   int n = 4; 
-   n = n >> 2; 
-   cout << n; 
-   return 0; 
-}  
-#include <stdio.h> 
-  
-int main()  
-{ 
-   unsigned int n = 1; 
-   char *c = (char*)&n; 
-   if (*c)     
-       printf("LITTLE ENDIAN"); 
-   else
-       printf("BIG ENDIAN"); 
-   return 0; 
-} 
-#include<iostream>
-using namespace std;
-int main()
-{
-    int a,b,sum;
-    cout<<"Enter the 1st number\n";
-    cin>>a;
-    cout<<"Enter the 2nd number\n";
-    cin>>b;
-    sum=a+b;
-    cout<<"Sum of two number "<<sum;
+        cout<< num << " is a prime number.";
     return 0;
 }
-#include<iostream>
-using namespace std;
-int main()
+/* This function returns integer value.  */
+int prime(int n)
 {
-    int a,b,mul;
-    cout<<"Enter the 1st number\n";
-    cin>>a;
-    cout<<"Enter the 2nd number\n";
-    cin>>b;
-    mul=a*b;
-    cout<<"Multiplication of two number "<<mul;
-    return 0;
-}
-#include<iostream>
-using namespace std;
-int main()
-{
-int a,b,c;
-cout<<"Enter the first number\t";
-cin>>a;
-cout<<"\nEnter the second number\t";
-cin>>b;
-c=a;
-a=b;
-b=c;
-cout<<"First number is\t"<<a;
-cout<<"\nSecond number is\t<<b;
-return 0;
-}
-#include<iostream>
-#include<conio.h>
-
-using namespace std;
-
-int main() {
-    // Variable Declaration
-    int a;
-
-    // Get Input Value
-    cout << "Enter the Number :";
-    cin>>a;
-
-    int counter = 1;
-    //Do while Loop Block
-    do {
-        cout << "Execute Do While " << counter << " time" << endl;
-        counter++;
-    } while (counter <= a);
-
-    // Wait For Output Screen
-    getch();
-    return 0;
-}
-/*  Example Program For Simple Class Example Program For Prime Number In C++
-    little drops @ thiyagaraaj.com
-
-    Coded By:THIYAGARAAJ MP             */
-
-#include<iostream>
-#include<conio.h>
-
-using namespace std;
-
-// Class Declaration
-
-class prime {
-    //Member Variable Declaration
-    int a, k, i;
-public:
-
-    prime(int x) {
-        a = x;
+    int i;
+    for(i = 2; i <= n/2; ++i)
+    {
+        if(n % i == 0)
+            return 1;
     }
+    return 0;
+}
 
-    // Object Creation For Class
+#include <iostream>
+using namespace std;
+void display(int);
+void display(float);
+void display(int, float);
+int main() {
+    int a = 5;
+    float b = 5.5;
+    display(a);
+    display(b);
+    display(a, b);
+    return 0;
+}
+void display(int var) {
+    cout << "Integer number: " << var << endl;
+}
+void display(float var) {
+    cout << "Float number: " << var << endl;
+}
+void display(int var1, float var2) {
+    cout << "Integer number: " << var1;
+    cout << " and float number:" << var2;
+}
 
-    void calculate() {
-        k = 1;
+#include <iostream>
+using namespace std;
+int absolute(int);
+float absolute(float);
+int main() {
+    int a = -5;
+    float b = 5.5;
+    
+    cout << "Absolute value of " << a << " = " << absolute(a) << endl;
+    cout << "Absolute value of " << b << " = " << absolute(b);
+    return 0;
+}
+int absolute(int var) {
+     if (var < 0)
+         var = -var;
+    return var;
+}
+float absolute(float var){
+    if (var < 0.0)
+        var = -var;
+    return var;
+}
+
+#include <iostream>
+using namespace std;
+void display(char = '*', int = 1);
+int main()
+{
+    cout << "No argument passed:\n";
+    display();
+    
+    cout << "\nFirst argument passed:\n";
+    display('#');
+    
+    cout << "\nBoth argument passed:\n";
+    display('$', 5);
+    return 0;
+}
+void display(char c, int n)
+{
+    for(int i = 1; i <= n; ++i)
+    {
+        cout << c;
+    }
+    cout << endl;
+}
+
+#include <iostream>
+using namespace std;
+void test();
+int main() 
+{
+    // local variable to main()
+    int var = 5;
+    test();
+    
+    // illegal: var1 not declared inside main()
+    var1 = 9;
+}
+void test()
+{
+    // local variable to test()
+    int var1;
+    var1 = 6;
+    // illegal: var not declared inside test()
+    cout << var;
+}
+
+#include <iostream>
+using namespace std;
+// Global variable declaration
+int c = 12;
+void test();
+int main()
+{
+    ++c;
+    // Outputs 13
+    cout << c <<endl;
+    test();
+    return 0;
+}
+void test()
+{
+    ++c;
+    // Outputs 14
+    cout << c;
+}
+
+#include <iostream>
+using namespace std;
+void test()
+{
+    // var is a static variable
+    static int var = 0;
+    ++var;
+    cout << var << endl;
+}
+int main()
+{
+    
+    test();
+    test();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int factorial(int);
+int main() 
+{
+    int n;
+    cout<<"Enter a number to find factorial: ";
+    cin >> n;
+    cout << "Factorial of " << n <<" = " << factorial(n);
+    return 0;
+}
+int factorial(int n) 
+{
+    if (n > 1) 
+    {
+        return n*factorial(n-1);
+    }
+    else 
+    {
+        return 1;
+    }
+}
+
+#include <iostream>
+using namespace std;
+struct Person
+{
+    char name[50];
+    int age;
+    float salary;
+};
+int main()
+{
+    Person p1;
+    
+    cout << "Enter Full name: ";
+    cin.get(p1.name, 50);
+    cout << "Enter age: ";
+    cin >> p1.age;
+    cout << "Enter salary: ";
+    cin >> p1.salary;
+    cout << "\nDisplaying Information." << endl;
+    cout << "Name: " << p1.name << endl;
+    cout <<"Age: " << p1.age << endl;
+    cout << "Salary: " << p1.salary;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+struct Person
+{
+    char name[50];
+    int age;
+    float salary;
+};
+void displayData(Person);   // Function declaration
+int main()
+{
+    Person p;
+    cout << "Enter Full name: ";
+    cin.get(p.name, 50);
+    cout << "Enter age: ";
+    cin >> p.age;
+    cout << "Enter salary: ";
+    cin >> p.salary;
+    // Function call with structure variable as an argument
+    displayData(p);
+    return 0;
+}
+void displayData(Person p)
+{
+    cout << "\nDisplaying Information." << endl;
+    cout << "Name: " << p.name << endl;
+    cout <<"Age: " << p.age << endl;
+    cout << "Salary: " << p.salary;
+}
+
+#include <iostream>
+using namespace std;
+struct Person {
+    char name[50];
+    int age;
+    float salary;
+};
+Person getData(Person); 
+void displayData(Person); 
+int main()
+{
+    Person p;
+    p = getData(p);   
+    displayData(p);
+    return 0;
+}
+Person getData(Person p) {
+    cout << "Enter Full name: ";
+    cin.get(p.name, 50);
+    cout << "Enter age: ";
+    cin >> p.age;
+    cout << "Enter salary: ";
+    cin >> p.salary;
+    return p;
+}
+void displayData(Person p)
+{
+    cout << "\nDisplaying Information." << endl;
+    cout << "Name: " << p.name << endl;
+    cout <<"Age: " << p.age << endl;
+    cout << "Salary: " << p.salary;
+}
+
+#include <iostream>
+using namespace std;
+enum week { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday };
+int main()
+{
+    week today;
+    today = Wednesday;
+    cout << "Day " << today+1;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+enum seasons { spring = 34, summer = 4, autumn = 9, winter = 32};
+int main() {
+    seasons s;
+    s = summer;
+    cout << "Summer = " << s << endl;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+enum suit {
+    club = 0,
+    diamonds = 10,
+    hearts = 20,
+    spades = 3
+} card;
+int main() 
+{
+    card = club;
+    cout << "Size of enum variable " << sizeof(card) << " bytes.";   
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() 
+{
+    int numbers[5], sum = 0;
+    cout << "Enter 5 numbers: ";
+    
+    //  Storing 5 number entered by user in an array
+    //  Finding the sum of numbers entered
+    for (int i = 0; i < 5; ++i) 
+    {
+        cin >> numbers[i];
+        sum += numbers[i];
+    }
+    
+    cout << "Sum = " << sum << endl;  
+    
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    int test[3][2] =
+    {
+        {2, -5},
+        {4, 0},
+        {9, 1}
+    };
+    // Accessing two dimensional array using
+    // nested for loops
+    for(int i = 0; i < 3; ++i)
+    {
+        for(int j = 0; j < 2; ++j)
         {
-            for (i = 2; i <= a / 2; i++)
-                if (a % i == 0) {
-                    k = 0;
-                    break;
-                } else {
-                    k = 1;
-                }
+            cout<< "test[" << i << "][" << j << "] = " << test[i][j] << endl;
         }
     }
-
-    void show() {
-        if (k == 1)
-            cout << "\n" << a << " is Prime Number.";
-        else
-            cout << "\n" << a << " is Not Prime Numbers.";
-    }
-};
-
-//Main Function
-
-int main() {
-    int a;
-    cout << "Enter the Number:";
-    cin>>a;
-
-    // Object Creation For Class
-    prime obj(a);
-
-    // Call Member Functions
-    obj.calculate();
-    obj.show();
-    getch();
     return 0;
 }
-#include<iostream.h>
-#include<stdlib.h>
-#include<conio.h>
-#define pi 3.14
 
-class fn {
-public:
-    void area(int); //circle
-    void area(int, int); //rectangle
-    void area(float, int, int); //triangle
-};
-
-void fn::area(int a) {
-
-
-    cout << "Area of Circle:" << pi * a*a;
-}
-
-void fn::area(int a, int b) {
-    cout << "Area of rectangle:" << a*b;
-}
-
-void fn::area(float t, int a, int b) {
-    cout << "Area of triangle:" << t * a*b;
-}
-
-void main() {
-    int ch;
-    int a, b, r;
-    clrscr();
-    fn obj;
-    cout << "\n\t\tFunction Overloading";
-    cout << "\n1.Area of Circle\n2.Area of Rectangle\n3.Area of Triangle\n4.Exit\n:?;
-            cout << ?Enter your Choice : ";
-            cin>>ch;
-
-    switch (ch) {
-        case 1:
-            cout << "Enter Radious of the Circle:";
-            cin>>r;
-            obj.area(r);
-            break;
-        case 2:
-            cout << "Enter Sides of the Rectangle:";
-            cin >> a>>b;
-            obj.area(a, b);
-            break;
-        case 3:
-            cout << "Enter Sides of the Triangle:";
-            cin >> a>>b;
-            obj.area(0.5, a, b);
-            break;
-        case 4:
-            exit(0);
+#include <iostream>
+using namespace std;
+const int CITY = 2;
+const int WEEK = 7;
+int main()
+{
+    int temperature[CITY][WEEK];
+    cout << "Enter all temperature for a week of first city and then second city. \n";
+    // Inserting the values into the temperature array
+    for (int i = 0; i < CITY; ++i)
+    {
+        for(int j = 0; j < WEEK; ++j)
+        {
+            cout << "City " << i + 1 << ", Day " << j + 1 << " : ";
+            cin >> temperature[i][j];
+        }
     }
-    getch();
+    cout << "\n\nDisplaying Values:\n";
+    // Accessing the values from the temperature array
+    for (int i = 0; i < CITY; ++i)
+    {
+        for(int j = 0; j < WEEK; ++j)
+        {
+            cout << "City " << i + 1 << ", Day " << j + 1 << " = " << temperature[i][j] << endl;
+        }
+    }
+    return 0;
 }
-#include<iostream>
-#include<conio.h>
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    // This array can store upto 12 elements (2x3x2)
+    int test[2][3][2];
+    cout << "Enter 12 values: \n";
+    
+    // Inserting the values into the test array
+    // using 3 nested for loops.
+    for(int i = 0; i < 2; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            for(int k = 0; k < 2; ++k )
+            {
+                cin >> test[i][j][k];
+            }
+        }
+    }
+    cout<<"\nDisplaying Value stored:"<<endl;
+    // Displaying the values with proper index.
+    for(int i = 0; i < 2; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            for(int k = 0; k < 2; ++k)
+            {
+                cout << "test[" << i << "][" << j << "][" << k << "] = " << test[i][j][k] << endl;
+            }
+        }
+    }
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+void display(int marks[5]);
+int main()
+{
+    int marks[5] = {88, 76, 90, 61, 69};
+    display(marks);
+    return 0;
+}
+void display(int m[5])
+{
+    cout << "Displaying marks: "<< endl;
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "Student "<< i + 1 <<": "<< m[i] << endl;
+    }
+}
+
+#include <iostream>
+using namespace std;
+void display(int n[3][2]);
+int main()
+{
+    int num[3][2] = {
+        {3, 4},
+        {9, 5},
+        {7, 1}
+    };
+    display(num);
+    return 0;
+}
+void display(int n[3][2])
+{
+    cout << "Displaying Values: " << endl;
+    for(int i = 0;  i < 3; ++i)
+    {
+        for(int j = 0; j < 2; ++j)
+        {
+            cout << n[i][j] << " ";
+        }
+    }
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    char str[100];
+    cout << "Enter a string: ";
+    cin >> str;
+    cout << "You entered: " << str << endl;
+    cout << "\nEnter another string: ";
+    cin >> str;
+    cout << "You entered: "<<str<<endl;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    char str[100];
+    cout << "Enter a string: ";
+    cin.get(str, 100);
+    cout << "You entered: " << str << endl;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    // Declaring a string object
+    string str;
+    cout << "Enter a string: ";
+    getline(cin, str);
+    cout << "You entered: " << str << endl;
+    return 0;
+}
 
 using namespace std;
-
-class Example {
-    // Variable Declaration
-    int a, b;
-public:
-
-    //Constructor
-
-    Example(int x, int y) {
-        // Assign Values In Constructor
-        a = x;
-        b = y;
-        cout << "Im Constructor\n";
-    }
-
-    void Display() {
-        cout << "Values :" << a << "\t" << b;
-    }
-};
-
-int main() {
-    Example Object(10, 20);
-    // Constructor invoked.
-    Object.Display();
-
-    // Wait For Output Screen
-    getch();
+void display(char *);
+void display(string);
+int main()
+{
+    string str1;
+    char str[100];
+    cout << "Enter a string: ";
+    getline(cin, str1);
+    cout << "Enter another string: ";
+    cin.get(str, 100, '\n');
+    display(str1);
+    display(str);
     return 0;
+}
+void display(char s[])
+{
+    cout << "Entered char array is: " << s << endl;
+}
+void display(string s)
+{
+    cout << "Entered string is: " << s << endl;
+}
+
+#include <iostream>
+using namespace std;
+int main() {
+    int *pc, c;
+    
+    c = 5;
+    cout << "Address of c (&c): " << &c << endl;
+    cout << "Value of c (c): " << c << endl << endl;
+    pc = &c;    // Pointer pc holds the memory address of variable c
+    cout << "Address that pointer pc holds (pc): "<< pc << endl;
+    cout << "Content of the address pointer pc holds (*pc): " << *pc << endl << endl;
+    
+    c = 11;    // The content inside memory address &c is changed from 5 to 11.
+    cout << "Address pointer pc holds (pc): " << pc << endl;
+    cout << "Content of the address pointer pc holds (*pc): " << *pc << endl << endl;
+    *pc = 2; 
+    cout << "Address of c (&c): " << &c << endl;
+    cout << "Value of c (c): " << c << endl << endl;
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    float arr[5];
+    float *ptr;
+    
+    cout << "Displaying address using arrays: " << endl;
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "&arr[" << i << "] = " << &arr[i] << endl;
+    }
+    // ptr = &arr[0]
+    ptr = arr;
+    cout<<"\nDisplaying address using pointers: "<< endl;
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "ptr + " << i << " = "<< ptr + i << endl;
+    }
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main() {
+    float arr[5];
+    
+   // Inserting data using pointer notation
+    cout << "Enter 5 numbers: ";
+    for (int i = 0; i < 5; ++i) {
+        cin >> *(arr + i) ;
+    }
+    // Displaying data using pointer notation
+    cout << "Displaying data: " << endl;
+    for (int i = 0; i < 5; ++i) {
+        cout << *(arr + i) << endl ;
+    }
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+// Function prototype
+void swap(int&, int&);
+int main()
+{
+    int a = 1, b = 2;
+    cout << "Before swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    swap(a, b);
+    cout << "\nAfter swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    return 0;
+}
+void swap(int& n1, int& n2) {
+    int temp;
+    temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+
+#include <iostream>
+using namespace std;
+// Function prototype
+void swap(int*, int*);
+int main()
+{
+    int a = 1, b = 2;
+    cout << "Before swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    swap(&a, &b);
+    cout << "\nAfter swapping" << endl;
+    cout << "a = " << a << endl;
+    cout << "b = " << b << endl;
+    return 0;
+}
+void swap(int* n1, int* n2) {
+    int temp;
+    temp = *n1;
+    *n1 = *n2;
+    *n2 = temp;
+}
+
+#include <iostream>
+using namespace std;
+class Test
+{
+private:
+    int num;
+    float *ptr;
+public:
+    Test()
+    {
+        cout << "Enter total number of students: ";
+        cin >> num;
+        
+        ptr = new float[num];
+        
+        cout << "Enter GPA of students." << endl;
+        for (int i = 0; i < num; ++i)
+        {
+            cout << "Student" << i + 1 << ": ";
+            cin >> *(ptr + i);
+        }
+    }
+    
+    ~Test() {
+        delete[] ptr;
+    }
+    void Display() {
+        cout << "\nDisplaying GPA of students." << endl;
+        for (int i = 0; i < num; ++i) {
+            cout << "Student" << i+1 << " :" << *(ptr + i) << endl;
+        }
+    }
+    
+};
+int main() {
+    Test s;
+    s.Display();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Test
+{
+    private:
+        int data1;
+        float data2;
+    public:
+       
+       void insertIntegerData(int d)
+       {
+          data1 = d;
+          cout << "Number: " << data1;
+        }
+       float insertFloatData()
+       {
+           cout << "\nEnter data: ";
+           cin >> data2;
+           return data2;
+        }
+};
+ int main()
+ {
+      Test o1, o2;
+      float secondDataOfObject2;
+      o1.insertIntegerData(12);
+      secondDataOfObject2 = o2.insertFloatData();
+      cout << "You entered " << secondDataOfObject2;
+      return 0;
+ }
+ 
+ #include <iostream>
+using namespace std;
+class Area
+{
+    private:
+       int length;
+       int breadth;
+    public:
+       // Constructor
+       Area(): length(5), breadth(2){ }
+       void GetLength()
+       {
+           cout << "Enter length and breadth respectively: ";
+           cin >> length >> breadth;
+       }
+       int AreaCalculation() {  return (length * breadth);  }
+       void DisplayArea(int temp)
+       {
+           cout << "Area: " << temp;
+       }
+};
+int main()
+{
+    Area A1, A2;
+    int temp;
+    A1.GetLength();
+    temp = A1.AreaCalculation();
+    A1.DisplayArea(temp);
+    cout << endl << "Default Area when value is not taken from user" << endl;
+    temp = A2.AreaCalculation();
+    A2.DisplayArea(temp);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Area
+{
+    private:
+       int length;
+       int breadth;
+    public:
+       // Constructor with no arguments
+       Area(): length(5), breadth(2) { }
+       // Constructor with two arguments
+       Area(int l, int b): length(l), breadth(b){ }
+       void GetLength()
+       {
+           cout << "Enter length and breadth respectively: ";
+           cin >> length >> breadth;
+       }
+       int AreaCalculation() {  return length * breadth;  }
+       void DisplayArea(int temp)
+       {
+           cout << "Area: " << temp << endl;
+       }
+};
+int main()
+{
+    Area A1, A2(2, 1);
+    int temp;
+    cout << "Default Area when no argument is passed." << endl;
+    temp = A1.AreaCalculation();
+    A1.DisplayArea(temp);
+    cout << "Area when (2,1) is passed as argument." << endl;
+    temp = A2.AreaCalculation();
+    A2.DisplayArea(temp);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Complex
+{
+    private:
+       int real;
+       int imag;
+    public:
+       Complex(): real(0), imag(0) { }
+       void readData()
+        {
+           cout << "Enter real and imaginary number respectively:"<<endl;
+           cin >> real >> imag;
+        }
+        void addComplexNumbers(Complex comp1, Complex comp2)
+        {
+           // real represents the real data of object c3 because this function is called using code c3.add(c1,c2);
+            real=comp1.real+comp2.real;
+             // imag represents the imag data of object c3 because this function is called using code c3.add(c1,c2);
+            imag=comp1.imag+comp2.imag;
+        }
+        void displaySum()
+        {
+            cout << "Sum = " << real<< "+" << imag << "i";
+        }
+};
+int main()
+{
+    Complex c1,c2,c3;
+    c1.readData();
+    c2.readData();
+    c3.addComplexNumbers(c1, c2);
+    c3.displaySum();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Test
+{
+   private:
+      int count;
+   public:
+       Test(): count(5){}
+       void operator ++() 
+       { 
+          count = count+1; 
+       }
+       void Display() { cout<<"Count: "<<count; }
+};
+int main()
+{
+    Test t;
+    // this calls "function void operator ++()" function
+    ++t;    
+    t.Display();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Person
+{
+     public:
+        string profession;
+        int age;
+        Person(): profession("unemployed"), age(16) { }
+        void display()
+        {
+             cout << "My profession is: " << profession << endl;
+             cout << "My age is: " << age << endl;
+             walk();
+             talk();
+        }
+        void walk() { cout << "I can walk." << endl; }
+        void talk() { cout << "I can talk." << endl; }
+};
+// MathsTeacher class is derived from base class Person.
+class MathsTeacher : public Person
+{
+    public:
+       void teachMaths() { cout << "I can teach Maths." << endl; }
+};
+// Footballer class is derived from base class Person.
+class Footballer : public Person
+{
+    public:
+       void playFootball() { cout << "I can play Football." << endl; }
+};
+int main()
+{
+     MathsTeacher teacher;
+     teacher.profession = "Teacher";
+     teacher.age = 23;
+     teacher.display();
+     teacher.teachMaths();
+     Footballer footballer;
+     footballer.profession = "Footballer";
+     footballer.age = 19;
+     footballer.display();
+     footballer.playFootball();
+     return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Distance
+{
+    private:
+        int meter;
+    public:
+        Distance(): meter(0) { }
+        //friend function
+        friend int addFive(Distance);
+};
+// friend function definition
+int addFive(Distance d)
+{
+    //accessing private data from non-member function
+    d.meter += 5;
+    return d.meter;
+}
+int main()
+{
+    Distance D;
+    cout<<"Distance: "<< addFive(D);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+// forward declaration
+class B;
+class A {
+    private:
+      int numA;
+    public:
+      A(): numA(12) { }
+      // friend function declaration
+      friend int add(A, B);
+};
+class B {
+    private:
+       int numB;
+    public:
+       B(): numB(1) { }
+       // friend function declaration
+       friend int add(A , B);
+};
+// Function add() is the friend function of classes A and B
+// that accesses the member variables numA and numB
+int add(A objectA, B objectB)
+{
+   return (objectA.numA + objectB.numB);
+}
+int main()
+{
+    A objectA;
+    B objectB;
+    cout<<"Sum: "<< add(objectA, objectB);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Weapon
+{
+    public:
+       void loadFeatures()
+         { cout << "Loading weapon features.\n"; }
+};
+class Bomb : public Weapon
+{
+    public:
+       void loadFeatures()
+         { cout << "Loading bomb features.\n"; }
+};
+class Gun : public Weapon
+{
+    public:
+       void loadFeatures()
+         { cout << "Loading gun features.\n"; }
+};
+int main()
+{
+    Weapon *w = new Weapon;
+    Bomb *b = new Bomb;
+    Gun *g = new Gun;
+    w->loadFeatures();
+    b->loadFeatures();
+    g->loadFeatures();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Weapon
+{
+    public:
+      Weapon() { cout << "Loading weapon features.\n"; }
+      
+      void features()
+         { cout << "Loading weapon features.\n"; }
+};
+class Bomb : public Weapon
+{
+    public:
+       void features()
+         { 
+            this->Weapon::features(); 
+            cout << "Loading bomb features.\n"; 
+         }
+};
+class Gun : public Weapon
+{
+    public:
+       void features()
+         {
+            this->Weapon::features(); 
+            cout << "Loading gun features.\n"; 
+         }
+};
+class Loader
+{
+   public:
+     void loadFeatures(Weapon *weapon)
+     {  
+        weapon->features();
+     }     
+};
+int main()
+{
+    Loader *l = new Loader;
+    Weapon *w;
+    Bomb b;
+    Gun g;
+    w = &b;
+    l->loadFeatures(w);
+    w = &g;
+    l->loadFeatures(w);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+class Weapon
+{
+    public:
+      virtual void features()
+         { cout << "Loading weapon features.\n"; }
+};
+class Bomb : public Weapon
+{
+    public:
+       void features()
+         { this->Weapon::features();
+           cout << "Loading bomb features.\n"; 
+         }
+};
+class Gun : public Weapon
+{
+    public:
+       void features()
+         { 
+            this->Weapon::features();
+            cout << "Loading gun features.\n"; 
+         }
+};
+class Loader
+{
+   public:
+     void loadFeatures(Weapon *weapon)
+     {
+        weapon->features();
+     }     
+};
+int main()
+{
+    Loader *l = new Loader;
+    Weapon *w;
+    Bomb b;
+    Gun g;
+    w = &b;
+    l->loadFeatures(w);
+    w = &g;
+    l->loadFeatures(w);
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+// Abstract class
+class Shape                   
+{
+    protected:
+       float l;
+    public:
+       void getData()       
+       {
+           cin >> l;
+       }
+       
+       // virtual Function
+       virtual float calculateArea() = 0;
+};
+class Square : public Shape
+{
+    public:
+       float calculateArea()
+       {   return l*l;  }
+};
+class Circle : public Shape
+{
+    public:
+       float calculateArea()
+       { return 3.14*l*l; }
+};
+int main()
+{
+    Square s;
+    Circle c;
+    cout << "Enter length to calculate the area of a square: ";
+    s.getData();
+    cout<<"Area of square: " << s.calculateArea();
+    cout<<"\nEnter radius to calculate the area of a circle: ";
+    c.getData();
+    cout << "Area of circle: " << c.calculateArea();
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+// template function
+template <class T>
+T Large(T n1, T n2)
+{
+	return (n1 > n2) ? n1 : n2;
+}
+int main()
+{
+	int i1, i2;
+	float f1, f2;
+	char c1, c2;
+	cout << "Enter two integers:\n";
+	cin >> i1 >> i2;
+	cout << Large(i1, i2) <<" is larger." << endl;
+	cout << "\nEnter two floating-point numbers:\n";
+	cin >> f1 >> f2;
+	cout << Large(f1, f2) <<" is larger." << endl;
+	cout << "\nEnter two characters:\n";
+	cin >> c1 >> c2;
+	cout << Large(c1, c2) << " has larger ASCII value.";
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+template <typename T>
+void Swap(T &n1, T &n2)
+{
+	T temp;
+	temp = n1;
+	n1 = n2;
+	n2 = temp;
+}
+int main()
+{
+	int i1 = 1, i2 = 2;
+	float f1 = 1.1, f2 = 2.2;
+	char c1 = 'a', c2 = 'b';
+	cout << "Before passing data to function template.\n";
+	cout << "i1 = " << i1 << "\ni2 = " << i2;
+	cout << "\nf1 = " << f1 << "\nf2 = " << f2;
+	cout << "\nc1 = " << c1 << "\nc2 = " << c2;
+	Swap(i1, i2);
+	Swap(f1, f2);
+	Swap(c1, c2);
+        cout << "\n\nAfter passing data to function template.\n";
+	cout << "i1 = " << i1 << "\ni2 = " << i2;
+	cout << "\nf1 = " << f1 << "\nf2 = " << f2;
+	cout << "\nc1 = " << c1 << "\nc2 = " << c2;
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+template <class T>
+class Calculator
+{
+private:
+	T num1, num2;
+	
+public:
+	Calculator(T n1, T n2)
+	{
+		num1 = n1;
+		num2 = n2;
+	}
+	
+	void displayResult()
+	{
+		cout << "Numbers are: " << num1 << " and " << num2 << "." << endl;
+		cout << "Addition is: " << add() << endl;
+		cout << "Subtraction is: " << subtract() << endl;
+		cout << "Product is: " << multiply() << endl;
+		cout << "Division is: " << divide() << endl;
+	}
+	
+	T add() { return num1 + num2; }
+	
+	T subtract() { return num1 - num2; }
+	
+	T multiply() { return num1 * num2; }
+	
+	T divide() { return num1 / num2; }
+};
+int main()
+{
+	Calculator<int> intCalc(2, 1);
+	Calculator<float> floatCalc(2.4, 1.2);
+	
+	cout << "Int results:" << endl;
+	intCalc.displayResult();
+	
+	cout << endl << "Float results:" << endl;
+	floatCalc.displayResult();
+	
+	return 0;
 }
