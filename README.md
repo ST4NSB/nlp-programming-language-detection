@@ -4,7 +4,7 @@ A library to program, train & process words to detect the high level programming
 Currently supports: C++, Java.
 
 ## Install
-+ Download: git clone https://github.com/ST4NSB/nlp-programming-language-detection.git  
++ Download: **git clone https://github.com/ST4NSB/nlp-programming-language-detection.git**
 + Open project file  
 + Add Reference to the project -> NLP\\..\bin\Debug\\**NLP.dll** (might need to remove it first from the project solution)  
 + Compile & run  
