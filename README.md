@@ -1,4 +1,4 @@
-# Natural Language Processing application
+# Natural Language Processing programming
 ## Information
 A library to program, train & process words to detect the high level programming language from a (txt) file.  
 Currently supports: C++, Java.
