@@ -1,7 +1,7 @@
 # Natural Language Processing programming lang
 # Information
 A library to program, train & process words to detect the high level programming language from a (txt) file.  
-Currently supports C++, Java.
+Currently supports: C++, Java.
 
 ## Install
 + Download: git clone https://github.com/ST4NSB/nlp-programming-language-detection.git  
