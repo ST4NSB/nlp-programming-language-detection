@@ -372,44 +372,72 @@ namespace NaturalLanguageProcessing
         public class Predictor
         {
             private Dictionary<int, float> predictorValues;
-            private Dictionary<int, float> probabilities;
+            private Dictionary<int, double> probabilities;
             public Predictor()
             {
                 predictorValues = new Dictionary<int, float>();
-                probabilities = new Dictionary<int, float>();
+                probabilities = new Dictionary<int, double>();
             }
 
             public void makePrediction(List<DataModel> trainedModel, List<string> words, int start_label)
             {
-                // simplistic method
+                calculatePredictionValues(trainedModel, words, start_label);
+                var results = normalProbability();
+                softmax(results);                
+            }
+
+            private void calculatePredictionValues(List<DataModel> trainedModel, List<string> words, int start_label)
+            {
                 int labelID = start_label;
                 float prob = 0.0f;
                 foreach (var item in trainedModel)
                 {
                     if (item.getDataModelLabelID() != labelID)
                     {
+                        //prob = (prob - 100) / 10;
                         predictorValues.Add(labelID, prob);
                         labelID = item.getDataModelLabelID();
                         prob = 0.0f;
                     }
                     if (item.getDataModelLabelID() == labelID && words.Contains(item.getDataModelString()))
-                        prob += ((float)item.getDataModelTagInfo() * item.getConfidenceProcentRate() );
+                    {
+                        prob += (((float)item.getDataModelTagInfo() * 0.40f) *
+                            (item.getConfidenceProcentRate() * 0.60f));
+                    }
                     if (trainedModel.Last().Equals(item))
+                    {
+                        //prob = (prob - 100) / 10;
                         predictorValues.Add(labelID, prob);
+                    }
                 }
-
-                calculateProbabilities();                
             }
 
-            private void calculateProbabilities()
+            private Dictionary<int, double> normalProbability()
             {
-                // simplistic probability calculation.
+                Dictionary<int, double> nP = new Dictionary<int, double>();
                 float sum = predictorValues.Values.Sum();
                 foreach (var item in predictorValues)
-                    probabilities.Add(item.Key, (item.Value / sum));
+                    nP.Add(item.Key, ((item.Value / sum) * 10));
+                return nP;
             }
 
-            public KeyValuePair<int, float> argmax()
+            private void softmax(Dictionary<int, double> scores)
+            {
+                // S(xi) = [e^(xi) / sum j->n (e^(xj))]
+                Dictionary<int, double> softmaxValues = new Dictionary<int, double>();
+
+                foreach (var x in scores)
+                {
+                    double ePowerX = Math.Pow(Math.E, x.Value); // e ^ x
+                    softmaxValues.Add(x.Key, ePowerX);
+                }
+
+                double sum = softmaxValues.Values.Sum();
+                foreach (var x in softmaxValues)
+                    probabilities.Add(x.Key, (x.Value / sum));
+            }
+
+            public KeyValuePair<int, double> argmax()
             {
                 var max = this.probabilities.OrderByDescending(x => x.Value).First();
                 return max;

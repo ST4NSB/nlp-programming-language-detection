@@ -96,19 +96,19 @@ namespace nlp_prglang
             foreach (var item in mt.countValues())
                 Console.WriteLine(item.Key + " => " + item.Value);
             Console.WriteLine("--------------------- .. ");
-            /*Console.WriteLine("------ Prediction values (0.f) -------- ..");
-            foreach (var item in predictor.predictorValues)
-            {
-                Console.WriteLine(item.Key + " -> " + item.Value);
-            }
-            Console.WriteLine("-------------------- .. ");
+            //Console.WriteLine("------ Prediction values (0.f) -------- ..");
+            //foreach (var item in predictor.predictorValues)
+            //{
+            //    Console.WriteLine(item.Key + " -> " + item.Value);
+            //}
+            //Console.WriteLine("-------------------- .. ");
 
-            Console.WriteLine("------ Prediction probabilities (%) -------- ..");
-            foreach (var item in predictor.probabilities)
-            {
-                Console.WriteLine(item.Key + " -> " + item.Value);
-            }
-            Console.WriteLine("-------------------- .. ");*/
+            //Console.WriteLine("------ Prediction probabilities (%) -------- ..");
+            //foreach (var item in predictor.probabilities)
+            //{
+            //    Console.WriteLine(item.Key + " -> " + item.Value);
+            //}
+            //Console.WriteLine("-------------------- .. ");
         } 
 
         static void Main(string[] args)
@@ -142,6 +142,8 @@ namespace nlp_prglang
             predictor.makePrediction(mymodel, predProcessed, LANG_CPP);
             var max = predictor.argmax();
 
+            //debugFunc(mt, predictor);
+
             // output message for prediction
             string msg = "\nThe model predicts: ";
             switch(max.Key)
@@ -150,8 +152,7 @@ namespace nlp_prglang
                 case LANG_JAVA: msg += "Java"; break;
                 // add here more languages
             }
-            msg += " as the language of the file(" + predictionFile + ").\nConfidence rate: " + max.Value + " (" 
-                + (0.999999f - max.Value) + " for the other(s)!)\n";
+            msg += " as the language of the file(" + predictionFile + ").\nPrediction value: " + max.Value;
             Console.WriteLine(msg);
         }
     }
