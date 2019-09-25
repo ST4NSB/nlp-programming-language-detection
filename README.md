@@ -2,17 +2,17 @@
 ## Details
 A library to program, train & process words to detect the high level programming language from a (txt) file.  
 Currently supports:  
-+ **C/C++** (train data in bin\\Debug\\netcoreapp2.1\\files\\**training_cpp.txt**)  
-+ **Java** (train data in bin\\Debug\\netcoreapp2.1\\files\\**training_java.txt**)
++ **C/C++** (training data in: [bin\\Debug\\netcoreapp2.1\\files\\**training_cpp.txt**])  
++ **Java** (training data in: [bin\\Debug\\netcoreapp2.1\\files\\**training_java.txt**])
 
 ## Install
 + Download: **git clone https://github.com/ST4NSB/nlp-programming-language-detection.git**
 + Open project file  
-+ Add Reference to the project -> NLP\\..\bin\Debug\\**NLP.dll** (might need to remove it first from the project solution)  
++ Add Reference to the project -> [NLP\\..\bin\Debug\\**NLP.dll**] (might need to remove it first from the project solution)  
 + Compile & Run  
 
 ## Example
-In bin\\Debug\\netcoreapp2.1\\files\\**test_file.txt** there is a sample program (written in C++) for testing
+In [bin\\Debug\\netcoreapp2.1\\files\\**test_file.txt**] there is a sample program (written in C++) for testing
 
 ```cpp
 /* This is a test file  */
@@ -55,7 +55,7 @@ int main()
 }
 ```
 
-The output file will show: 
+The output file will print: 
 >The model predicts: C++ as the language of the file(files/test_file.txt).  
 >Prediction procent: 0.997382117908361
 
