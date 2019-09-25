@@ -1,5 +1,4 @@
 # Natural Language Processing programming
-## Details
 A library to program, train & process words to detect the high level programming language from a (txt) file.  
 Currently supports:  
 + **C/C++** (training data in: [bin\\Debug\\netcoreapp2.1\\files\\**training_cpp.txt**])  
