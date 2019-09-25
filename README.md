@@ -59,6 +59,8 @@ The output file will print:
 >The model predicts: C++ as the language of the file(files/test_file.txt).  
 >Prediction procent: 0.997382117908361
 
+The model predicts the test file to be C++ code with a procentage of 99.73 % 
+
 ## License
 This project is licensed unde **MIT** [https://opensource.org/licenses/MIT/]
 
