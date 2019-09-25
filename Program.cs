@@ -120,7 +120,7 @@ namespace nlp_prglang
             // create model
             ModelTrainer mt = new ModelTrainer();
             
-            // load processed data in model
+            // load processed training data in model
             foreach (var item in dataCpp)
                 mt.loadData(LANG_CPP, item.Value, item.Key);
             foreach (var item in dataJava)
@@ -130,9 +130,9 @@ namespace nlp_prglang
             //mt.setRemovingThresholdValue(0);
             mt.trainData();
 
-            // load 
-            string predictionFile = "files/cpp.txt";
-            string pred = new FileReader(predictionFile).getAllTxt(true);
+            // load test file
+            string testFile = "files/test_file.txt";
+            string pred = new FileReader(testFile).getAllTxt(true);
             List<string> predProcessed = new Token().wordsOnlyTokenizer(pred);
             predProcessed = new StopWords().removeWordsBasedOnStopWordsList(predProcessed);
       
@@ -152,7 +152,7 @@ namespace nlp_prglang
                 case LANG_JAVA: msg += "Java"; break;
                 // add here more languages
             }
-            msg += " as the language of the file(" + predictionFile + ").\nPrediction value: " + max.Value;
+            msg += " as the language of the file(" + testFile + ").\nPrediction procent: " + max.Value;
             Console.WriteLine(msg);
         }
     }
