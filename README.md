@@ -60,7 +60,7 @@ The output file will print:
 
 Confidence procentage: **99.73%**   
 
-
+---
 An example for Java below
 
 ```java
