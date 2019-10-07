@@ -55,10 +55,84 @@ int main()
 ```
 
 The output file will print: 
->The model predicts: C++ as the language of the file(files/test_file.txt).  
->Prediction procent: 0.997382117908361
+> The model predicts: C++ as the language of the file(files/test_file.txt).    
+> Prediction procent: 0.997382117908361    
 
-The model predicts the test file to be C++ code with a confident procentage of 99.73 % 
+Confidence procentage: **99.73%**   
+
+
+An example for Java below
+
+```java
+/* This is a test file  */
+/* Write code in here and let the model predict it */
+
+package Searches;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
+
+import static java.lang.String.format;
+
+class BinarySearch implements SearchAlgorithm {
+    @Override
+    public  <T extends Comparable<T>> int find(T[] array, T key) {
+        return search(array, key, 0, array.length);
+    }
+
+    private <T extends Comparable<T>> int search(T array[], T key, int left, int right){
+        if (right < left) return -1; // this means that the key not found
+
+        // find median
+        int median = (left + right) >>> 1;
+        int comp = key.compareTo(array[median]);
+
+        if (comp == 0) {
+            return median;
+        } else if (comp < 0) {
+            return search(array, key, left, median - 1);
+        } else {
+            return search(array, key, median + 1, right);
+        }
+    }
+
+    // Driver Program
+    public static void main(String[] args) {
+        // Just generate data
+        Random r = ThreadLocalRandom.current();
+
+        int size = 100;
+        int maxElement = 100000;
+
+        Integer[] integers = IntStream.generate(() -> 
+            r.nextInt(maxElement)).limit(size).sorted().boxed().toArray(Integer[]::new);
+
+
+        // The element that should be found
+        int shouldBeFound = integers[r.nextInt(size - 1)];
+
+        BinarySearch search = new BinarySearch();
+        int atIndex = search.find(integers, shouldBeFound);
+
+        System.out.println(format(
+            "Should be found: %d. Found %d at index %d. An array length %d",
+            shouldBeFound, integers[atIndex], atIndex, size
+        ));
+
+        int toCheck = Arrays.binarySearch(integers, shouldBeFound);
+        System.out.println(format("Found by system method at an index: %d. Is equal: %b", 
+            toCheck, toCheck == atIndex));
+    }
+}
+```
+
+The output file will print: 
+> The model predicts: Java as the language of the file(files/test_file.txt).     
+> Prediction procent: 0.997127347046451    
+
+Confidence procentage: **99.71%**  
 
 ## License
 This project is licensed unde **MIT** [https://opensource.org/licenses/MIT/]
