@@ -190,7 +190,9 @@ The output file will print:
 > The model predicts: Java as the language of the file(files/test_file.txt).   
 > Prediction procent: 0.9958684418727  
 
-Confidence procentage: **99.58%**  
+Confidence procentage: **99.58%**   
+(This file has the lowest procentage because it doesn't use **keywords** like **import** and **package** 
+which have a high frequency of appearances in the train_java.txt file)
 
 ## License
 This project is licensed unde **MIT** [https://opensource.org/licenses/MIT/]
